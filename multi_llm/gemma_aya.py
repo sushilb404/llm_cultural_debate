@@ -4,7 +4,6 @@ import jsonlines
 import os
 import argparse
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
-from huggingface_hub.hf_api import HfFolder
 from prompt import prompts
 from utils import country_capitalized_mapping, parse_final_answer, parse_response
 
@@ -25,9 +24,6 @@ def extract_answer(text):
 
 def main():
     start_time = datetime.datetime.now()
-
-    hf_token = ""
-    HfFolder.save_token(hf_token)
 
     # =========================================== Parameter Setup ===========================================
     parser = argparse.ArgumentParser()
