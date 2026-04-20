@@ -216,6 +216,15 @@ We provide two additional scripts for novelty-focused analysis:
 - `scripts/analyze_interventions.py`: computes Debate Parity Gain (DPG), Partner Stability Index (PSI), and partner selection by parity-adjusted score
 - `scripts/analyze_drift.py`: computes turn-to-turn drift, neutral collapse, and country-level drift from debate outputs
 
+#### Final Run Configuration (Current)
+
+The final full-dataset run configuration uses:
+
+- `Qwen/Qwen2.5-3B-Instruct` (alias `qwen3`)
+- `Qwen/Qwen2.5-1.5B-Instruct` (alias `qwen15`)
+
+We did run initial mini-batch tests with smaller open models to verify pipeline stability and throughput before selecting this final 3B setup.
+
 #### 1) Benchmark One Output File (CPG / PAA)
 
 ```bash
@@ -253,15 +262,15 @@ This writes:
 ```bash
 python scripts/analyze_drift.py \
   --input_file results/multi/open_qwen3_qwen15_full.jsonl \
-  --output_dir results/analysis_drift \
+  --output_dir results/analysis_drift_qwen3 \
   --models qwen3 qwen15
 ```
 
 This writes:
 
-- `results/analysis_drift/drift_summary.json`
-- `results/analysis_drift/drift_model_metrics.csv`
-- `results/analysis_drift/drift_country_metrics.csv`
+- `results/analysis_drift_qwen3/drift_summary.json`
+- `results/analysis_drift_qwen3/drift_model_metrics.csv`
+- `results/analysis_drift_qwen3/drift_country_metrics.csv`
 
 Notes:
 
@@ -272,43 +281,43 @@ Notes:
 
 ```bash
 python scripts/significance_report.py \
-  --input_file results/multi/open_qwen7_qwen15_full.jsonl \
-  --first_model qwen7 \
+  --input_file results/multi/open_qwen3_qwen15_full.jsonl \
+  --first_model qwen3 \
   --second_model qwen15 \
   --parity_lambda 0.25 \
   --bootstrap_samples 1500 \
   --permutation_samples 2000 \
-  --output_json results/analysis_qwen7/significance_report.json
+  --output_json results/analysis_qwen3/significance_report.json
 ```
 
 This writes:
 
-- `results/analysis_qwen7/significance_report.json`
+- `results/analysis_qwen3/significance_report.json`
 
 #### 5) Output Integrity Validation (Duplicates / Coverage)
 
 ```bash
 python scripts/validate_results_integrity.py \
-  --input_file results/multi/open_qwen7_qwen15_full.jsonl \
+  --input_file results/multi/open_qwen3_qwen15_full.jsonl \
   --reference_file data/normad.jsonl \
   --expected_rows 2633 \
-  --output_json results/analysis_integrity_qwen7/integrity_report.json \
-  --duplicates_csv results/analysis_integrity_qwen7/duplicate_rows.csv
+  --output_json results/analysis_integrity_qwen3/integrity_report.json \
+  --duplicates_csv results/analysis_integrity_qwen3/duplicate_rows.csv
 ```
 
 This writes:
 
-- `results/analysis_integrity_qwen7/integrity_report.json`
-- `results/analysis_integrity_qwen7/duplicate_rows.csv` (only when duplicates exist)
+- `results/analysis_integrity_qwen3/integrity_report.json`
+- `results/analysis_integrity_qwen3/duplicate_rows.csv` (only when duplicates exist)
 
 #### 6) Judge Sensitivity Check
 
 ```bash
 python scripts/judge_sensitivity_check.py \
-  --input_file results/multi/open_qwen7_qwen15_full.jsonl \
-  --model qwen7 \
-  --output_json results/analysis_sensitivity_qwen7/qwen7_judge_sensitivity.json \
-  --output_csv results/analysis_sensitivity_qwen7/qwen7_judge_disagreements.csv
+  --input_file results/multi/open_qwen3_qwen15_full.jsonl \
+  --model qwen3 \
+  --output_json results/analysis_sensitivity_qwen3/qwen3_judge_sensitivity.json \
+  --output_csv results/analysis_sensitivity_qwen3/qwen3_judge_disagreements.csv
 ```
 
 Run again with `--model qwen15` for the second debater.
@@ -322,16 +331,16 @@ For long runs, use the resilient supervisor so generation restarts automatically
 ```bash
 python scripts/resilient_resume_runner.py \
   --input_path data/normad.jsonl \
-  --output_path results/multi/open_qwen7_qwen15_full.jsonl \
+  --output_path results/multi/open_qwen3_qwen15_full.jsonl \
   --expected_rows 2633 \
-  --model_a Qwen/Qwen2.5-7B-Instruct \
+  --model_a Qwen/Qwen2.5-3B-Instruct \
   --model_b Qwen/Qwen2.5-1.5B-Instruct \
-  --alias_a qwen7 \
+  --alias_a qwen3 \
   --alias_b qwen15 \
   --max_new_tokens 48 \
   --poll_seconds 90 \
   --stall_seconds 1800 \
-  --log_file results/logs/qwen7_resilient_runner.log
+  --log_file results/logs/qwen3_resilient_runner.log
 ```
 
 What this does:
@@ -340,6 +349,22 @@ What this does:
 - restarts automatically if the worker crashes,
 - restarts automatically if no new rows are written for a long stall window,
 - exits when `expected_rows` are reached.
+
+Optional: queue all downstream analysis automatically when the 3B run reaches 2633 rows.
+
+```bash
+python scripts/postprocess_when_complete.py \
+  --target_file results/multi/open_qwen3_qwen15_full.jsonl \
+  --expected_rows 2633 \
+  --first_model qwen3 \
+  --second_model qwen15 \
+  --analysis_dir results/analysis_qwen3 \
+  --drift_dir results/analysis_drift_qwen3 \
+  --figures_dir results/figures_qwen3 \
+  --ml_dir results/analysis_ml_qwen3 \
+  --integrity_dir results/analysis_integrity_qwen3 \
+  --sensitivity_dir results/analysis_sensitivity_qwen3
+```
 
 
 <a id="citation"></a>
