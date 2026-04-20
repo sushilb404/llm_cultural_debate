@@ -30,6 +30,10 @@ While previous efforts in cultural alignment have focused on single-model, singl
 - **`2025-07-10`** Our paper has been selected for an **oral** presentation — top 8% of accepted papers!
 - **`2025-05-15`** Our paper is accepted to **ACL 2025**! See you in Vienna!
 
+## 👥 Team (This Project Fork)
+- Sushil Bohara
+- Leo Ding
+
 
 ## ✏️ Content
 - [🗺️ Overview](#overview)
