@@ -2,7 +2,7 @@
 ## Causal and Fairness-Aware Benchmarking of Cultural Alignment in Multi-LLM Debate
 
 ### Team
-Sushil Bohara, Paulo Sergio Condori, Leo Ding
+Sushil Bohara & Leo Ding
 
 ## 1. Summary
 This adjusted project focuses on **cultural alignment benchmarking** using the codebase we already have in this repository. Instead of building a new generic conversation simulator, we will use the existing pipelines for:
