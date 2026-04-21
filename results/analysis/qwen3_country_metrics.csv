@@ -1,0 +1,10 @@
+country,total,correct,accuracy
+colombia,4,2,0.5
+egypt,12,1,0.083333
+hong_kong,12,3,0.25
+lebanon,9,1,0.111111
+philippines,12,3,0.25
+spain,12,4,0.333333
+sudan,15,0,0.0
+tonga,12,0,0.0
+zimbabwe,12,1,0.083333

@@ -1,0 +1,21 @@
+[
+  {
+    "model_id": "Qwen/Qwen2.5-7B-Instruct",
+    "alias": "qwen7",
+    "status": "ok",
+    "max_examples": 1,
+    "use_rot": false,
+    "valid_examples": 1,
+    "correct": 1,
+    "accuracy": 1.0,
+    "average_generation_time_sec": 5.0223,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 5.0223
+      }
+    ]
+  }
+]

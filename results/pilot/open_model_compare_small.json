@@ -1,0 +1,62 @@
+[
+  {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "status": "ok",
+    "max_examples": 3,
+    "use_rot": false,
+    "valid_examples": 3,
+    "correct": 0,
+    "accuracy": 0.0,
+    "average_generation_time_sec": 0.1939,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.2491
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1702
+      },
+      {
+        "index": 3,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1624
+      }
+    ]
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "status": "ok",
+    "max_examples": 3,
+    "use_rot": false,
+    "valid_examples": 3,
+    "correct": 0,
+    "accuracy": 0.0,
+    "average_generation_time_sec": 1.8812,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "",
+        "elapsed_sec": 1.7553
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "",
+        "elapsed_sec": 1.6488
+      },
+      {
+        "index": 3,
+        "gold": "yes",
+        "prediction": "",
+        "elapsed_sec": 2.2394
+      }
+    ]
+  }
+]

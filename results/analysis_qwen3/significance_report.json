@@ -1,0 +1,39 @@
+{
+  "input_file": "results\\multi\\open_qwen3_qwen15_full.jsonl",
+  "n_unique_rows": 2633,
+  "first_model": "qwen3",
+  "second_model": "qwen15",
+  "parity_lambda": 0.25,
+  "observed": {
+    "acc_a": 0.358147,
+    "acc_b": 0.358147,
+    "acc_diff_a_minus_b": 0.0,
+    "cpg_a": 0.165033,
+    "cpg_b": 0.165033,
+    "cpg_diff_a_minus_b": 0.0,
+    "paa_a": 0.316888,
+    "paa_b": 0.316888,
+    "paa_diff_a_minus_b": 0.0
+  },
+  "bootstrap_samples": 1500,
+  "bootstrap_ci95": {
+    "acc_diff_ci95": [
+      0.0,
+      0.0
+    ],
+    "cpg_diff_ci95": [
+      0.0,
+      0.0
+    ],
+    "paa_diff_ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "permutation_samples": 2000,
+  "pvalues_two_sided": {
+    "acc_diff_pvalue": 1.0,
+    "cpg_diff_pvalue": 1.0,
+    "paa_diff_pvalue": 1.0
+  }
+}

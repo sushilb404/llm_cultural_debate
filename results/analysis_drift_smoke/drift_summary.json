@@ -1,0 +1,23 @@
+{
+  "input_file": "results\\multi\\open_qwen3_qwen15_smoke.jsonl",
+  "models": [
+    {
+      "model": "qwen3",
+      "total": 2,
+      "drift_rate": 0.5,
+      "neutral_collapse_rate": 0.0,
+      "initial_accuracy": 0.5,
+      "final_accuracy": 1.0,
+      "accuracy_gain": 0.5
+    },
+    {
+      "model": "qwen15",
+      "total": 2,
+      "drift_rate": 0.0,
+      "neutral_collapse_rate": 0.0,
+      "initial_accuracy": 1.0,
+      "final_accuracy": 1.0,
+      "accuracy_gain": 0.0
+    }
+  ]
+}

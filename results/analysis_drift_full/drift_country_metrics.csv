@@ -1,0 +1,9 @@
+model,country,total,drift_rate,neutral_collapse_rate,initial_accuracy,final_accuracy,accuracy_gain
+qwen3,egypt,12,0.25,0.0,0.75,1.0,0.25
+qwen3,lebanon,9,0.0,0.0,1.0,1.0,0.0
+qwen3,philippines,8,0.125,0.0,0.875,1.0,0.125
+qwen3,zimbabwe,12,0.0,0.0,1.0,1.0,0.0
+qwen15,egypt,12,0.0,0.0,1.0,1.0,0.0
+qwen15,lebanon,9,0.111111,0.0,0.888889,1.0,0.111111
+qwen15,philippines,8,0.0,0.0,1.0,1.0,0.0
+qwen15,zimbabwe,12,0.0,0.0,1.0,1.0,0.0

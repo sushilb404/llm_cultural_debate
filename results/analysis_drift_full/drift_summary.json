@@ -1,0 +1,23 @@
+{
+  "input_file": "results\\multi\\open_qwen3_qwen15_full.jsonl",
+  "models": [
+    {
+      "model": "qwen3",
+      "total": 41,
+      "drift_rate": 0.097561,
+      "neutral_collapse_rate": 0.0,
+      "initial_accuracy": 0.902439,
+      "final_accuracy": 1.0,
+      "accuracy_gain": 0.097561
+    },
+    {
+      "model": "qwen15",
+      "total": 41,
+      "drift_rate": 0.02439,
+      "neutral_collapse_rate": 0.0,
+      "initial_accuracy": 0.97561,
+      "final_accuracy": 1.0,
+      "accuracy_gain": 0.02439
+    }
+  ]
+}

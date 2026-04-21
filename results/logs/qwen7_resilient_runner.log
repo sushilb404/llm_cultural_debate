@@ -1,0 +1,20 @@
+[2026-04-19 20:37:43] Supervisor started. Progress 25/2633. Output file: C:\Users\sbohar3\OneDrive\llm_cultural_debate\results\multi\open_qwen7_qwen15_full.jsonl
+[2026-04-19 20:37:43] Starting worker: C:\Users\sbohar3\OneDrive\llm_cultural_debate\.venv\Scripts\python.exe scripts/run_multi_open_debate.py --input_path data/normad.jsonl --output_path results/multi/open_qwen7_qwen15_full.jsonl --model_a Qwen/Qwen2.5-7B-Instruct --model_b Qwen/Qwen2.5-1.5B-Instruct --alias_a qwen7 --alias_b qwen15 --max_new_tokens 48 --resume
+[2026-04-19 20:37:43] Worker started with PID=25596
+[2026-04-19 20:39:13] Progress advanced: 26/2633
+[2026-04-19 20:40:43] Progress advanced: 27/2633
+[2026-04-19 20:42:13] Progress advanced: 28/2633
+[2026-04-19 20:43:43] Progress advanced: 29/2633
+[2026-04-19 20:45:13] Progress advanced: 30/2633
+[2026-04-19 20:46:43] Progress advanced: 31/2633
+[2026-04-19 20:49:44] Supervisor started. Progress 32/2633. Output file: C:\Users\sbohar3\OneDrive\llm_cultural_debate\results\multi\open_qwen7_qwen15_full.jsonl
+[2026-04-19 20:49:44] Starting worker: C:\Users\sbohar3\OneDrive\llm_cultural_debate\.venv\Scripts\python.exe scripts/run_multi_open_debate.py --input_path data/normad.jsonl --output_path results/multi/open_qwen7_qwen15_full.jsonl --model_a Qwen/Qwen2.5-7B-Instruct --model_b Qwen/Qwen2.5-1.5B-Instruct --alias_a qwen7 --alias_b qwen15 --max_new_tokens 48 --resume
+[2026-04-19 20:49:44] Worker started with PID=28128
+[2026-04-19 20:50:54] Supervisor started. Progress 32/2633. Output file: C:\Users\sbohar3\OneDrive\llm_cultural_debate\results\multi\open_qwen7_qwen15_full.jsonl
+[2026-04-19 20:50:54] Starting worker: C:\Users\sbohar3\OneDrive\llm_cultural_debate\.venv\Scripts\python.exe scripts/run_multi_open_debate.py --input_path data/normad.jsonl --output_path results/multi/open_qwen7_qwen15_full.jsonl --model_a Qwen/Qwen2.5-7B-Instruct --model_b Qwen/Qwen2.5-1.5B-Instruct --alias_a qwen7 --alias_b qwen15 --max_new_tokens 48 --resume
+[2026-04-19 20:50:54] Worker started with PID=15108
+[2026-04-19 20:52:24] Progress advanced: 33/2633
+[2026-04-19 20:53:54] Progress advanced: 34/2633
+[2026-04-19 20:55:24] Progress advanced: 36/2633
+[2026-04-19 20:56:54] Progress advanced: 38/2633
+[2026-04-19 20:58:24] Progress advanced: 40/2633

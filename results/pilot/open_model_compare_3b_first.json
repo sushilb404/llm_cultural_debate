@@ -1,0 +1,218 @@
+[
+  {
+    "model_id": "Qwen/Qwen2.5-3B-Instruct",
+    "status": "ok",
+    "max_examples": 10,
+    "use_rot": false,
+    "valid_examples": 10,
+    "correct": 1,
+    "accuracy": 0.1,
+    "average_generation_time_sec": 1.0311,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 1.4222
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 1.1367
+      },
+      {
+        "index": 3,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 1.0884
+      },
+      {
+        "index": 4,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.93
+      },
+      {
+        "index": 5,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 1.0118
+      },
+      {
+        "index": 6,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.9808
+      },
+      {
+        "index": 7,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.8886
+      },
+      {
+        "index": 8,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 1.0084
+      },
+      {
+        "index": 9,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.9572
+      },
+      {
+        "index": 10,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.8871
+      }
+    ]
+  },
+  {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "status": "ok",
+    "max_examples": 10,
+    "use_rot": false,
+    "valid_examples": 10,
+    "correct": 6,
+    "accuracy": 0.6,
+    "average_generation_time_sec": 0.4738,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.631
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4511
+      },
+      {
+        "index": 3,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4426
+      },
+      {
+        "index": 4,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5126
+      },
+      {
+        "index": 5,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4463
+      },
+      {
+        "index": 6,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4458
+      },
+      {
+        "index": 7,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4285
+      },
+      {
+        "index": 8,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4873
+      },
+      {
+        "index": 9,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4604
+      },
+      {
+        "index": 10,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4326
+      }
+    ]
+  },
+  {
+    "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+    "status": "ok",
+    "max_examples": 10,
+    "use_rot": false,
+    "valid_examples": 10,
+    "correct": 0,
+    "accuracy": 0.0,
+    "average_generation_time_sec": 0.1619,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.2317
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1516
+      },
+      {
+        "index": 3,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1485
+      },
+      {
+        "index": 4,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1476
+      },
+      {
+        "index": 5,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1565
+      },
+      {
+        "index": 6,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1736
+      },
+      {
+        "index": 7,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1476
+      },
+      {
+        "index": 8,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.159
+      },
+      {
+        "index": 9,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.159
+      },
+      {
+        "index": 10,
+        "gold": "yes",
+        "prediction": "neutral",
+        "elapsed_sec": 0.1438
+      }
+    ]
+  }
+]

@@ -1,0 +1,3 @@
+model,total,drift_rate,neutral_collapse_rate,initial_accuracy,final_accuracy,accuracy_gain
+qwen3,2633,0.535891,0.0,0.527535,0.358147,-0.169389
+qwen15,2633,0.099506,0.0,0.410179,0.358147,-0.052032

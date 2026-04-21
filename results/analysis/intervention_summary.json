@@ -1,0 +1,13 @@
+{
+  "parity_lambda": 0.25,
+  "single_models": [
+    "qwen15",
+    "qwen3"
+  ],
+  "num_multi_pairs": 2,
+  "outputs": {
+    "dpg_csv": "results\\analysis\\debate_parity_gain.csv",
+    "psi_csv": "results\\analysis\\partner_stability_index.csv",
+    "selection_csv": "results\\analysis\\partner_selection_by_paa.csv"
+  }
+}

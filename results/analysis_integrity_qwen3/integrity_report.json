@@ -1,0 +1,18 @@
+{
+  "input_file": "results\\multi\\open_qwen3_qwen15_full.jsonl",
+  "reference_file": "data\\normad.jsonl",
+  "rows_total": 2633,
+  "rows_unique": 2633,
+  "expected_rows": 2633,
+  "expected_rows_met": true,
+  "violations": {
+    "duplicates": 0,
+    "missing_required_rows": 0,
+    "unexpected_rows_vs_reference": 0,
+    "missing_reference_rows": 0
+  },
+  "duplicates_csv": "",
+  "missing_required_examples": [],
+  "unexpected_rows_examples": [],
+  "missing_reference_examples": []
+}

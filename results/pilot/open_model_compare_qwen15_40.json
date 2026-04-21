@@ -1,0 +1,255 @@
+[
+  {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "alias": "qwen15",
+    "status": "ok",
+    "max_examples": 40,
+    "use_rot": false,
+    "valid_examples": 40,
+    "correct": 26,
+    "accuracy": 0.65,
+    "average_generation_time_sec": 0.541,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.6827
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4572
+      },
+      {
+        "index": 3,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4703
+      },
+      {
+        "index": 4,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5684
+      },
+      {
+        "index": 5,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.5078
+      },
+      {
+        "index": 6,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4543
+      },
+      {
+        "index": 7,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4832
+      },
+      {
+        "index": 8,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.5229
+      },
+      {
+        "index": 9,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4877
+      },
+      {
+        "index": 10,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.43
+      },
+      {
+        "index": 11,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5587
+      },
+      {
+        "index": 12,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.6346
+      },
+      {
+        "index": 13,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.6075
+      },
+      {
+        "index": 14,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4609
+      },
+      {
+        "index": 15,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.478
+      },
+      {
+        "index": 16,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4475
+      },
+      {
+        "index": 17,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4918
+      },
+      {
+        "index": 18,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4433
+      },
+      {
+        "index": 19,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.464
+      },
+      {
+        "index": 20,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4535
+      },
+      {
+        "index": 21,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.4702
+      },
+      {
+        "index": 22,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5336
+      },
+      {
+        "index": 23,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.6255
+      },
+      {
+        "index": 24,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.6983
+      },
+      {
+        "index": 25,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.659
+      },
+      {
+        "index": 26,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.6386
+      },
+      {
+        "index": 27,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.6798
+      },
+      {
+        "index": 28,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.6171
+      },
+      {
+        "index": 29,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.6073
+      },
+      {
+        "index": 30,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.6299
+      },
+      {
+        "index": 31,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5581
+      },
+      {
+        "index": 32,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.56
+      },
+      {
+        "index": 33,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.5567
+      },
+      {
+        "index": 34,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.4964
+      },
+      {
+        "index": 35,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.5069
+      },
+      {
+        "index": 36,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5945
+      },
+      {
+        "index": 37,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5398
+      },
+      {
+        "index": 38,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5354
+      },
+      {
+        "index": 39,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.5094
+      },
+      {
+        "index": 40,
+        "gold": "yes",
+        "prediction": "no",
+        "elapsed_sec": 0.5181
+      }
+    ]
+  }
+]
