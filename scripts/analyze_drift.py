@@ -5,8 +5,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
-
-LABELS = {"yes", "no", "neutral"}
+from label_utils import normalize_label
 
 
 def read_jsonl(path: Path) -> Iterable[dict]:
@@ -27,19 +26,6 @@ def write_csv(path: Path, rows: List[dict], fieldnames: List[str]) -> None:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-
-
-def normalize_label(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    if cleaned in LABELS:
-        return cleaned
-    return "neutral"
 
 
 def infer_base_models(sample: dict) -> List[str]:

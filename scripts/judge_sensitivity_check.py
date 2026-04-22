@@ -5,8 +5,10 @@ from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+from label_utils import normalize_label
 
-LABELS = ("yes", "no", "neutral")
+
+LABELS = ("yes", "no", "neutral", "invalid")
 
 
 def read_jsonl(path: Path) -> List[dict]:
@@ -28,17 +30,6 @@ def scenario_key(row: dict) -> Tuple[str, str, str, str]:
     )
 
 
-def normalize_gold(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    return "neutral"
-
-
 def judge_lenient(text: str) -> str:
     cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
     if "yes" in cleaned or "is socially acceptable" in cleaned or "are socially acceptable" in cleaned:
@@ -47,7 +38,7 @@ def judge_lenient(text: str) -> str:
         return "no"
     if "neither" in cleaned:
         return "neutral"
-    return "neutral"
+    return "invalid"
 
 
 def judge_strict(text: str) -> str:
@@ -61,7 +52,7 @@ def judge_strict(text: str) -> str:
             return "no"
         if tok in ("neither", "neutral"):
             return "neutral"
-    return "neutral"
+    return "invalid"
 
 
 def accuracy(preds: List[str], gold: List[str]) -> float:
@@ -143,7 +134,7 @@ def main() -> None:
 
     for idx, row in enumerate(rows):
         base_text = str(row.get(field, ""))
-        g = normalize_gold(str(row.get("Gold Label", "")))
+        g = normalize_label(str(row.get("Gold Label", "")))
         p_base = judge_lenient(base_text)
 
         if use_external_alternate:

@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
+from label_utils import normalize_label
+
 
 def read_jsonl(path: Path) -> Iterable[dict]:
     with path.open("r", encoding="utf-8") as f:
@@ -26,17 +28,6 @@ def write_csv(path: Path, rows: List[dict], fieldnames: List[str]) -> None:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-
-
-def normalize_label(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "is socially acceptable" in cleaned or "are socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "is not socially acceptable" in cleaned or "are not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    return cleaned
 
 
 @dataclass

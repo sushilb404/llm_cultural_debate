@@ -15,6 +15,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from multi_llm.prompt import prompts
 from multi_llm.utils import country_capitalized_mapping
+from label_utils import extract_label
 
 
 def read_jsonl(path: Path) -> Iterable[dict]:
@@ -30,21 +31,18 @@ def append_jsonl(path: Path, row: dict) -> None:
         f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
-def extract_label(text: str) -> str:
-    cleaned = (text or "").strip().lower()
-    if "yes" in cleaned or "socially acceptable" in cleaned:
-        return "yes"
-    if "neither" in cleaned:
-        return "neutral"
-    if "no" in cleaned or "not socially acceptable" in cleaned:
-        return "no"
-    return "neutral"
-
-
 def parse_after_keyword(text: str, keyword: str) -> str:
     if keyword in text:
-        return text.split(keyword, 1)[-1].strip()
+        return text.rsplit(keyword, 1)[-1].strip()
     return text.strip()
+
+
+def parse_after_any_keyword(text: str, keywords: List[str]) -> str:
+    parsed = text.strip()
+    for keyword in keywords:
+        if keyword in parsed:
+            parsed = parsed.rsplit(keyword, 1)[-1].strip()
+    return parsed
 
 
 def maybe_apply_chat_template(tokenizer, prompt: str) -> str:
@@ -157,14 +155,16 @@ def debate_one(
 
     a3_raw = generate(tok_a, llm_a, p3_a, max_new_tokens)
     b3_raw = generate(tok_b, llm_b, p3_b, max_new_tokens)
-    a3 = parse_after_keyword(a3_raw, "Answer")
-    b3 = parse_after_keyword(b3_raw, "Answer")
+    a3 = parse_after_any_keyword(a3_raw, ["Answer (Yes, No or Neither):", "Answer:", "Answer", "Label:"])
+    b3 = parse_after_any_keyword(b3_raw, ["Answer (Yes, No or Neither):", "Answer:", "Answer", "Label:"])
 
     return {
         f"{alias_a}_1": a1,
         f"{alias_b}_1": b1,
         f"{alias_a}_2": a2,
         f"{alias_b}_2": b2,
+        f"{alias_a}_final_raw": a3_raw,
+        f"{alias_b}_final_raw": b3_raw,
         f"{alias_a}_final": extract_label(a3),
         f"{alias_b}_final": extract_label(b3),
     }
@@ -234,8 +234,8 @@ def main() -> None:
                 f"{args.alias_b}_1": "",
                 f"{args.alias_a}_2": "",
                 f"{args.alias_b}_2": "",
-                f"{args.alias_a}_final": "neutral",
-                f"{args.alias_b}_final": "neutral",
+                f"{args.alias_a}_final": "invalid",
+                f"{args.alias_b}_final": "invalid",
             }
             error_text = str(exc)
             if torch.cuda.is_available():

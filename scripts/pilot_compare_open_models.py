@@ -16,6 +16,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from single_llm.single_model.prompt import prompts
 from single_llm.single_model.utils import country_capitalized_mapping
+from label_utils import normalize_label
 
 
 OPEN_MODEL_DEFAULTS = [
@@ -45,17 +46,6 @@ def write_jsonl(path: Path, rows: List[dict]) -> None:
     with path.open("w", encoding="utf-8") as f:
         for row in rows:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
-
-
-def normalize_label(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "is socially acceptable" in cleaned or "are socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "is not socially acceptable" in cleaned or "are not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    return cleaned
 
 
 def model_alias(model_id: str) -> str:

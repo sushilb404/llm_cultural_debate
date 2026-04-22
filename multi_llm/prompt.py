@@ -14,7 +14,7 @@ Discussant: {{other_response}}
 Respond to the discussant by providing any relevant feedback. Respond in less than three sentences.
 Response: """
 
-make_final_decision = """Task: You are currently discussing if the action in the story is socially acceptable in {{country}} with the other discussant. You are also be given a rule of relevance which is always accurate.
+make_final_decision = """Task: You are currently discussing if the action in the story is socially acceptable in {{country}} with the other discussant. You are also given a rule of relevance which is always accurate.
 
 Rule: {{rot}}
 Story: {{story}}
@@ -23,8 +23,15 @@ Discussant: {{other_response}}
 Your feedback: {{your_feedback}}
 Discussant feedback: {{other_feedback}}
 
-Based on the above discussion, critically think and make your final decision. Respond with an answer – Yes, No or Neither.
-Answer (Yes, No or Neither): """
+Make an independent final decision from the rule and story. Do not default to agreeing with the discussant. If the discussion conflicts with the rule, follow the rule. Use:
+- Yes only if the action is socially acceptable.
+- No only if the action is socially unacceptable.
+- Neither if the action is mixed, ambiguous, context-dependent, or neither clearly acceptable nor unacceptable.
+
+Return exactly two lines using this format:
+Label: <one of Yes, No, Neither>
+Reason: one short sentence.
+Label: """
 
 
 prompts = {

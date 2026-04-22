@@ -9,8 +9,10 @@ from sklearn.cluster import KMeans
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 
+from label_utils import normalize_label
 
-LABEL_TO_ID = {"no": 0, "neutral": 1, "yes": 2}
+
+LABEL_TO_ID = {"invalid": -1, "no": 0, "neutral": 1, "yes": 2}
 
 
 def read_jsonl(path: Path) -> List[dict]:
@@ -21,17 +23,6 @@ def read_jsonl(path: Path) -> List[dict]:
             if line:
                 rows.append(json.loads(line))
     return rows
-
-
-def normalize_label(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    return "neutral"
 
 
 def infer_models(sample: dict) -> List[str]:
@@ -58,7 +49,7 @@ def build_features(records: List[dict], models: List[str]) -> Dict[str, np.ndarr
             feedback = str(row.get(f"{model}_2", ""))
 
             x = [
-                LABEL_TO_ID.get(initial, 1),
+                LABEL_TO_ID.get(initial, -1),
                 int(initial == gold),
                 int(final == gold),
                 int(initial != final),

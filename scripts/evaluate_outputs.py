@@ -4,6 +4,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
+from label_utils import normalize_label
+
 
 def read_jsonl(path: Path) -> Iterable[dict]:
     with path.open("r", encoding="utf-8") as f:
@@ -20,17 +22,6 @@ def write_jsonl(path: Path, rows: List[dict]) -> None:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
-def normalize_label(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "is socially acceptable" in cleaned or "are socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "is not socially acceptable" in cleaned or "are not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    return cleaned
-
-
 def evaluate_single(input_file: Path, model: str) -> Tuple[List[dict], float]:
     per_country_correct: Dict[str, int] = defaultdict(int)
     per_country_total: Dict[str, int] = defaultdict(int)
@@ -40,7 +31,7 @@ def evaluate_single(input_file: Path, model: str) -> Tuple[List[dict], float]:
     for row in read_jsonl(input_file):
         country = row.get("Country", "unknown")
         pred = normalize_label(str(row.get(model, "")))
-        gold = str(row.get("Gold Label", "")).strip().lower()
+        gold = normalize_label(str(row.get("Gold Label", "")))
 
         total += 1
         per_country_total[country] += 1
@@ -89,7 +80,7 @@ def evaluate_multi(input_file: Path, first_model: str, second_model: str) -> Tup
 
     for row in read_jsonl(input_file):
         country = row.get("Country", "unknown")
-        gold = str(row.get("Gold Label", "")).strip().lower()
+        gold = normalize_label(str(row.get("Gold Label", "")))
 
         pred_1 = normalize_label(str(row.get(first_field, "")))
         pred_2 = normalize_label(str(row.get(second_field, "")))
