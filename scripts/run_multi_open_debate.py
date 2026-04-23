@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 import sys
 import time
 from datetime import datetime, timedelta
@@ -16,6 +17,13 @@ if str(REPO_ROOT) not in sys.path:
 from multi_llm.prompt import prompts
 from multi_llm.utils import country_capitalized_mapping
 from label_utils import extract_label
+
+
+NON_RETRIABLE_CONFIG_ERROR_EXIT_CODE = 2
+
+
+class PreflightConfigurationError(ValueError):
+    pass
 
 
 def read_jsonl(path: Path) -> Iterable[dict]:
@@ -50,6 +58,76 @@ def maybe_apply_chat_template(tokenizer, prompt: str) -> str:
         messages = [{"role": "user", "content": prompt}]
         return tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     return prompt
+
+
+def parse_model_size_billions(model_id: str):
+    match = re.search(r"(\d+(?:\.\d+)?)B", model_id, re.IGNORECASE)
+    if match is None:
+        return None
+    return float(match.group(1))
+
+
+def estimate_model_vram_gb(model_id: str, load_in_4bit: bool) -> float | None:
+    size_billions = parse_model_size_billions(model_id)
+    if size_billions is None:
+        return None
+
+    # Rough weights+runtime overhead estimate for inference.
+    gb_per_billion_params = 0.8 if load_in_4bit else 2.2
+    return size_billions * gb_per_billion_params
+
+
+def can_fit_models_on_separate_gpus(estimates: List[float], gpu_memory_gb_by_device: List[float]) -> bool:
+    remaining_memory = sorted(gpu_memory_gb_by_device, reverse=True)
+    for estimate in sorted(estimates, reverse=True):
+        for index, available in enumerate(remaining_memory):
+            if estimate <= available:
+                remaining_memory[index] -= estimate
+                break
+        else:
+            return False
+    return True
+
+
+def validate_gpu_capacity(
+    model_ids: List[str], load_in_4bit: bool, gpu_memory_gb_by_device: List[float]
+) -> None:
+    estimates = [estimate_model_vram_gb(model_id, load_in_4bit) for model_id in model_ids]
+    if any(estimate is None for estimate in estimates):
+        return
+
+    if not gpu_memory_gb_by_device:
+        return
+
+    estimated_required_gb = sum(estimates)
+    total_visible_gpu_memory_gb = sum(gpu_memory_gb_by_device)
+
+    if len(gpu_memory_gb_by_device) == 1:
+        usable_gpu_memory_gb = gpu_memory_gb_by_device[0] * 0.9
+        if estimated_required_gb <= usable_gpu_memory_gb:
+            return
+    else:
+        if can_fit_models_on_separate_gpus(estimates, gpu_memory_gb_by_device):
+            return
+        if estimated_required_gb <= total_visible_gpu_memory_gb:
+            return
+
+    model_list = ", ".join(model_ids)
+    raise PreflightConfigurationError(
+        "This GPU does not have enough VRAM for the requested models. "
+        f"Models: {model_list}. Estimated requirement: {estimated_required_gb:.1f} GB, "
+        f"available GPU memory: {total_visible_gpu_memory_gb:.1f} GB across "
+        f"{len(gpu_memory_gb_by_device)} visible GPU(s). "
+        "Use --load_in_4bit, choose smaller models, or run on a larger GPU."
+    )
+
+
+def get_visible_gpu_memory_gb_by_device() -> List[float]:
+    gpu_memory_gb_by_device = []
+    for index in range(torch.cuda.device_count()):
+        total_memory_bytes = torch.cuda.get_device_properties(index).total_memory
+        gpu_memory_gb_by_device.append(total_memory_bytes / (1024 ** 3))
+    return gpu_memory_gb_by_device
 
 
 def load_model(model_id: str, load_in_4bit: bool = False):
@@ -209,6 +287,14 @@ def main() -> None:
 
     done = load_done_count(output_path) if args.resume else 0
 
+    if torch.cuda.is_available():
+        gpu_memory_gb_by_device = get_visible_gpu_memory_gb_by_device()
+        validate_gpu_capacity(
+            model_ids=[args.model_a, args.model_b],
+            load_in_4bit=args.load_in_4bit,
+            gpu_memory_gb_by_device=gpu_memory_gb_by_device,
+        )
+
     print(f"Loading model A: {args.model_a}")
     model_a = load_model(args.model_a, load_in_4bit=args.load_in_4bit)
     print(f"Loading model B: {args.model_b}")
@@ -266,4 +352,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except PreflightConfigurationError as exc:
+        print(str(exc), file=sys.stderr)
+        sys.exit(NON_RETRIABLE_CONFIG_ERROR_EXIT_CODE)

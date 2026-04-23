@@ -7,6 +7,9 @@ from pathlib import Path
 from typing import List, Optional
 
 
+NON_RETRIABLE_CONFIG_ERROR_EXIT_CODE = 2
+
+
 def line_count(path: Path) -> int:
     if not path.exists():
         return 0
@@ -71,6 +74,10 @@ def stop_worker(proc: subprocess.Popen, log_path: Optional[Path]) -> None:
         proc.kill()
 
 
+def should_restart_worker(exit_code: int) -> bool:
+    return exit_code != NON_RETRIABLE_CONFIG_ERROR_EXIT_CODE
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Run debate generation with automatic crash/stall recovery using --resume."
@@ -133,8 +140,16 @@ def main() -> None:
 
         exit_code = worker.poll()
         if exit_code is not None:
-            log(f"Worker exited with code {exit_code}. Restarting with --resume.", log_path)
-            worker = start_worker(cmd, repo_root, log_path)
+            if should_restart_worker(exit_code):
+                log(f"Worker exited with code {exit_code}. Restarting with --resume.", log_path)
+                worker = start_worker(cmd, repo_root, log_path)
+            else:
+                log(
+                    f"Worker exited with non-retriable configuration error code {exit_code}. "
+                    "Supervisor exiting.",
+                    log_path,
+                )
+                raise SystemExit(exit_code)
             continue
 
         stalled_for = time.time() - last_growth_time

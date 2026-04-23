@@ -229,6 +229,10 @@ The final full-dataset run configuration uses:
 
 We did run initial mini-batch tests with smaller open models to verify pipeline stability and throughput before selecting this final 3B setup.
 
+Colab note:
+- A standard ~15 GB Colab GPU will not hold two `7B` models in full precision at the same time.
+- If you want to compare larger open models in Colab, pass `--load_in_4bit` or choose smaller checkpoints such as the `3B` and `1.5B` configuration above.
+
 #### 1) Benchmark One Output File (CPG / PAA)
 
 ```bash
