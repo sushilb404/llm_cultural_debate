@@ -2,9 +2,12 @@
   "parity_lambda": 0.25,
   "single_models": [
     "qwen15",
-    "qwen3"
+    "qwen15_without_rot_accuracy",
+    "qwen3",
+    "qwen7",
+    "qwen7_without_rot_accuracy"
   ],
-  "num_multi_pairs": 2,
+  "num_multi_pairs": 5,
   "outputs": {
     "dpg_csv": "results\\analysis\\debate_parity_gain.csv",
     "psi_csv": "results\\analysis\\partner_stability_index.csv",

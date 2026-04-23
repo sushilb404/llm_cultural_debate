@@ -1,5 +1,5 @@
 base_model,partner_model,pair,single_global_accuracy,debate_global_accuracy,delta_global_accuracy,single_cpg,debate_cpg,dpg,single_paa,debate_paa,delta_paa
-qwen15,qwen3,qwen15_qwen3,0.65,0.65,0.0,0.095238,0.095238,0.0,0.62619,0.62619,0.0
-qwen15,qwen3,qwen3_qwen15,0.65,0.65,0.0,0.095238,0.095238,0.0,0.62619,0.62619,0.0
+qwen15,qwen3,qwen15_qwen3,1.0,0.65,-0.35,0.0,0.095238,-0.095238,1.0,0.62619,-0.37381
+qwen15,qwen3,qwen3_qwen15,1.0,0.65,-0.35,0.0,0.095238,-0.095238,1.0,0.62619,-0.37381
 qwen3,qwen15,qwen15_qwen3,0.15,0.1,-0.05,0.5,0.059524,0.440476,0.025,0.085119,0.060119
 qwen3,qwen15,qwen3_qwen15,0.15,0.1,-0.05,0.5,0.059524,0.440476,0.025,0.085119,0.060119

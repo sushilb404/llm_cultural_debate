@@ -1,0 +1,11 @@
+torch
+transformers
+jsonlines
+pandas
+matplotlib
+scipy
+numpy
+tqdm
+accelerate
+bitsandbytes
+sentencepiece

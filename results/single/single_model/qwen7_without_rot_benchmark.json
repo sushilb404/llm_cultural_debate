@@ -1,0 +1,33 @@
+{
+  "input_file": "results\\single\\single_model\\qwen7_without_rot.jsonl",
+  "mode": "single",
+  "prediction_field": "qwen7_final",
+  "total": 2633,
+  "correct": 1323,
+  "parity_lambda": 0.25,
+  "global_accuracy": 0.502469,
+  "macro_accuracy": 0.503944,
+  "best_country_accuracy": 0.738095,
+  "worst_country_accuracy": 0.333333,
+  "cpg": 0.404762,
+  "paa": 0.401278,
+  "bootstrap_samples": 500,
+  "ci95": {
+    "global_accuracy_ci95": [
+      0.484998,
+      0.522218
+    ],
+    "macro_accuracy_ci95": [
+      0.486077,
+      0.522514
+    ],
+    "cpg_ci95": [
+      0.436842,
+      0.694253
+    ],
+    "paa_ci95": [
+      0.326782,
+      0.401389
+    ]
+  }
+}

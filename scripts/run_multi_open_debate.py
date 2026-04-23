@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
@@ -52,14 +52,14 @@ def maybe_apply_chat_template(tokenizer, prompt: str) -> str:
     return prompt
 
 
-def load_model(model_id: str):
+def load_model(model_id: str, load_in_4bit: bool = False):
     tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id,
-        torch_dtype="auto",
-        device_map="auto",
-        trust_remote_code=True,
-    )
+    kwargs = dict(device_map="auto", trust_remote_code=True)
+    if load_in_4bit:
+        kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
+    else:
+        kwargs["torch_dtype"] = "auto"
+    model = AutoModelForCausalLM.from_pretrained(model_id, **kwargs)
     if tokenizer.pad_token is None and tokenizer.eos_token is not None:
         tokenizer.pad_token = tokenizer.eos_token
     return tokenizer, model
@@ -191,6 +191,7 @@ def main() -> None:
     parser.add_argument("--alias_b", default="qwen15")
     parser.add_argument("--max_examples", type=int, default=0)
     parser.add_argument("--max_new_tokens", type=int, default=64)
+    parser.add_argument("--load_in_4bit", action="store_true", help="Load models in 4-bit quantization for faster inference (requires bitsandbytes)")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
 
@@ -209,9 +210,9 @@ def main() -> None:
     done = load_done_count(output_path) if args.resume else 0
 
     print(f"Loading model A: {args.model_a}")
-    model_a = load_model(args.model_a)
+    model_a = load_model(args.model_a, load_in_4bit=args.load_in_4bit)
     print(f"Loading model B: {args.model_b}")
-    model_b = load_model(args.model_b)
+    model_b = load_model(args.model_b, load_in_4bit=args.load_in_4bit)
 
     start = time.time()
     for i in range(done, total):

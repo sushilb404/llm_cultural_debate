@@ -1,0 +1,27 @@
+[
+  {
+    "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+    "alias": "qwen15",
+    "status": "ok",
+    "max_examples": 2,
+    "use_rot": false,
+    "valid_examples": 2,
+    "correct": 2,
+    "accuracy": 1.0,
+    "average_generation_time_sec": 0.417,
+    "examples": [
+      {
+        "index": 1,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.7693
+      },
+      {
+        "index": 2,
+        "gold": "yes",
+        "prediction": "yes",
+        "elapsed_sec": 0.0647
+      }
+    ]
+  }
+]
