@@ -1,18 +1,99 @@
 {
-  "input_file": "results\\single\\single_model\\qwen7_without_rot.jsonl",
-  "reference_file": "data\\normad.jsonl",
-  "rows_total": 2633,
-  "rows_unique": 2633,
+  "input_file": "results/Qwen7 Full Data.jsonl",
+  "reference_file": "data/normad.jsonl",
+  "rows_total": 30,
+  "rows_unique": 30,
   "expected_rows": 2633,
-  "expected_rows_met": true,
+  "expected_rows_met": false,
   "violations": {
     "duplicates": 0,
     "missing_required_rows": 0,
     "unexpected_rows_vs_reference": 0,
-    "missing_reference_rows": 0
+    "missing_reference_rows": 2603
   },
   "duplicates_csv": "",
   "missing_required_examples": [],
   "unexpected_rows_examples": [],
-  "missing_reference_examples": []
+  "missing_reference_examples": [
+    {
+      "country": "ukraine",
+      "story_preview": "Alice was celebrating her birthday at her home and received a beautifully wrapped gift from her friend, Emily. Without h"
+    },
+    {
+      "country": "ireland",
+      "story_preview": "After enjoying a delightful dinner at her friend Jamie's house, Sarah stood up and began helping Jamie clear the table a"
+    },
+    {
+      "country": "canada",
+      "story_preview": "After enjoying a delightful dinner at a local restaurant, Sarah and her friends requested the bill. When it arrived, Sar"
+    },
+    {
+      "country": "north_macedonia",
+      "story_preview": "During a visit to Sarah's house, Tom was offered a cup of tea. Tom accepted it, despite not being a big tea drinker, and"
+    },
+    {
+      "country": "south_sudan",
+      "story_preview": "At a dinner gathering at Sarah's house, Tom was offered the first portion of food. Despite being hungry, Tom declined th"
+    },
+    {
+      "country": "spain",
+      "story_preview": "Emily visited a friend's house and brought a bouquet of white lilies as a gift. Upon arrival, she handed the flowers to "
+    },
+    {
+      "country": "ethiopia",
+      "story_preview": "At a social gathering, Alice offered a plate of cookies to Bob, who politely declined initially. Alice, remembering the "
+    },
+    {
+      "country": "united_states_of_america",
+      "story_preview": "During a dinner party at her friend's house, Sarah immediately started eating once her plate was served, without waiting"
+    },
+    {
+      "country": "philippines",
+      "story_preview": "During a visit to Kevin's house, Sarah was offered a drink and some snacks on beautifully arranged dishes. Instead of ac"
+    },
+    {
+      "country": "portugal",
+      "story_preview": "During a family dinner at her friend's house, Sarah immediately started eating her meal as soon as it was placed in fron"
+    },
+    {
+      "country": "australia",
+      "story_preview": "At a housewarming party, Sarah decided to give her friend, Tom, an expensive watch as a gift, believing it would impress"
+    },
+    {
+      "country": "ethiopia",
+      "story_preview": "Alice decided to visit her friend's house for the first time. She brought a small plant as a gift. Is what Alice did soc"
+    },
+    {
+      "country": "japan",
+      "story_preview": "Alex arrived at a friend's house for dinner and immediately walked into the living room with his shoes on, looking for a"
+    },
+    {
+      "country": "mexico",
+      "story_preview": "At a dinner party at her friend's house, Emily was served a dish she didn't particularly enjoy. Nonetheless, she enthusi"
+    },
+    {
+      "country": "russia",
+      "story_preview": "Ethan decided to bring a gift to Mia's housewarming party. He chose a bouquet with nine roses. Is what Ethan did sociall"
+    },
+    {
+      "country": "sri_lanka",
+      "story_preview": "At a party, Sarah excitedly gave her friend a gift for their birthday. However, she handed it over with just one hand wh"
+    },
+    {
+      "country": "united_states_of_america",
+      "story_preview": "At a dinner party at a friend's house, Chris was particularly hungry. As soon as he got his hands on the pizza, he immed"
+    },
+    {
+      "country": "united_kingdom",
+      "story_preview": "Elena was planning to visit her friend Tom's house. She texted Tom to ask if it was a good time for him. Upon arrival, s"
+    },
+    {
+      "country": "poland",
+      "story_preview": "At a meeting in her office, Sophia noticed her colleague Mark about to enter the room. Immediately, she stood up. Is wha"
+    },
+    {
+      "country": "south_korea",
+      "story_preview": "During a gathering at a colleague's house, James noticed Taylor's glass was almost empty. Without hesitation, he refille"
+    }
+  ]
 }

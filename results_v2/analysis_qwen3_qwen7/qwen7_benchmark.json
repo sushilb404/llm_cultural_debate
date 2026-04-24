@@ -1,0 +1,33 @@
+{
+  "input_file": "results/multi/open_qwen3_qwen7.jsonl",
+  "mode": "multi",
+  "prediction_field": "qwen7_final",
+  "total": 2633,
+  "correct": 1836,
+  "parity_lambda": 0.25,
+  "global_accuracy": 0.697303,
+  "macro_accuracy": 0.700085,
+  "best_country_accuracy": 0.857143,
+  "worst_country_accuracy": 0.525,
+  "cpg": 0.332143,
+  "paa": 0.614268,
+  "bootstrap_samples": 500,
+  "ci95": {
+    "global_accuracy_ci95": [
+      0.680213,
+      0.715913
+    ],
+    "macro_accuracy_ci95": [
+      0.683309,
+      0.718995
+    ],
+    "cpg_ci95": [
+      0.385714,
+      0.610577
+    ],
+    "paa_ci95": [
+      0.542631,
+      0.609457
+    ]
+  }
+}

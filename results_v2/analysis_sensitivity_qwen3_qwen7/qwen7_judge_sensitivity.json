@@ -1,0 +1,14 @@
+{
+  "input_file": "results/multi/open_qwen3_qwen7.jsonl",
+  "model": "qwen7",
+  "alternate_source": "strict_parser_on_same_outputs",
+  "n_rows": 2633,
+  "agreement_rate": 0.900114,
+  "cohen_kappa": 0.832283,
+  "accuracy_base": 0.633118,
+  "accuracy_alternate": 0.697303,
+  "accuracy_delta_alternate_minus_base": 0.064185,
+  "n_disagreements": 263,
+  "disagreement_rate": 0.099886,
+  "disagreements_csv": "results/analysis_sensitivity_qwen3_qwen7/qwen7_judge_disagreements.csv"
+}
