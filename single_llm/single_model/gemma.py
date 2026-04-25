@@ -46,6 +46,7 @@ def main():
     parser.add_argument("--input_path", type=str)
     parser.add_argument("--output_path", type=str)
     parser.add_argument("--type", type=str, default="without_rot")
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
 
     processor = AutoProcessor.from_pretrained(model_id, cache_dir=own_cache_dir)
@@ -56,10 +57,21 @@ def main():
         device_map="auto",
     )
     # =========================================== Load Dataset ===========================================    
+    completed = 0
+    output_path = Path(args.output_path)
+    if args.resume and output_path.exists():
+        with jsonlines.open(output_path) as existing:
+            completed = sum(1 for _ in existing.iter())
+        print(f"Resuming Gemma from {completed} completed rows.")
+
     generations = []
-    with jsonlines.open(args.output_path, mode="w") as outfile:
+    mode = "a" if args.resume and output_path.exists() else "w"
+    with jsonlines.open(args.output_path, mode=mode) as outfile:
         with jsonlines.open(args.input_path) as file:
-            for line in file.iter():
+            for row_index, line in enumerate(file.iter()):
+                if row_index < completed:
+                    continue
+
                 country_small = line['Country']
                 country = country_capitalized_mapping[country_small]
                 story = line['Story']
