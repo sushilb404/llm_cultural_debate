@@ -1,23 +1,23 @@
 {
-  "input_file": "results/multi/open_qwen3_qwen7.jsonl",
+  "input_file": "results_v2/multi/open_qwen3_qwen7.jsonl",
   "models": [
     {
       "model": "qwen3",
       "total": 2633,
-      "drift_rate": 0.49981,
+      "drift_rate": 0.501709,
       "neutral_collapse_rate": 0.0,
-      "initial_accuracy": 0.697303,
+      "initial_accuracy": 0.696164,
       "final_accuracy": 0.3327,
-      "accuracy_gain": -0.364603
+      "accuracy_gain": -0.363464
     },
     {
       "model": "qwen7",
       "total": 2633,
-      "drift_rate": 0.156855,
+      "drift_rate": 0.153057,
       "neutral_collapse_rate": 0.038739,
-      "initial_accuracy": 0.807064,
-      "final_accuracy": 0.697303,
-      "accuracy_gain": -0.109761
+      "initial_accuracy": 0.805925,
+      "final_accuracy": 0.701861,
+      "accuracy_gain": -0.104064
     }
   ]
 }

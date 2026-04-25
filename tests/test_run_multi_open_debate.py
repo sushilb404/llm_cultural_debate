@@ -3,6 +3,7 @@ import sys
 import types
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = REPO_ROOT / "scripts"
@@ -56,6 +57,58 @@ class ValidateGpuCapacityTests(unittest.TestCase):
             load_in_4bit=False,
             gpu_memory_gb_by_device=[16.0, 16.0],
         )
+
+
+class DebateOneParsingTests(unittest.TestCase):
+    def test_final_labels_are_parsed_from_raw_generation_without_keyword_stripping(self):
+        final_a_raw = (
+            "Return exactly two lines using this format:\n"
+            "Label: <one of Yes, No, Neither>\n"
+            "Reason: one short sentence.\n"
+            "Label:\n"
+            "assistant\n"
+            "No\n"
+            "Reason: The rule does not support the action."
+        )
+        final_b_raw = (
+            "Return exactly two lines using this format:\n"
+            "Label: <one of Yes, No, Neither>\n"
+            "Reason: one short sentence.\n"
+            "Label:\n"
+            "assistant\n"
+            "Label: Yes\n"
+            "Reason: The story follows the rule."
+        )
+
+        with patch.object(
+            run_multi_open_debate,
+            "generate",
+            side_effect=[
+                "Answer: Yes\nBecause it follows the rule.",
+                "Answer: No\nBecause it conflicts with the rule.",
+                "Response: I disagree.",
+                "Response: I disagree as well.",
+                final_a_raw,
+                final_b_raw,
+            ],
+        ):
+            out = run_multi_open_debate.debate_one(
+                record={
+                    "Country": "united_states_of_america",
+                    "Story": "A short story.",
+                    "Rule-of-Thumb": "A short rule.",
+                },
+                model_a=(object(), object()),
+                model_b=(object(), object()),
+                alias_a="model_a",
+                alias_b="model_b",
+                max_new_tokens=32,
+            )
+
+        self.assertEqual(out["model_a_final_raw"], final_a_raw)
+        self.assertEqual(out["model_b_final_raw"], final_b_raw)
+        self.assertEqual(out["model_a_final"], "no")
+        self.assertEqual(out["model_b_final"], "yes")
 
 
 if __name__ == "__main__":

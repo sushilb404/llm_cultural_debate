@@ -29,9 +29,8 @@ Make an independent final decision from the rule and story. Do not default to ag
 - Neither if the action is mixed, ambiguous, context-dependent, or neither clearly acceptable nor unacceptable.
 
 Return exactly two lines using this format:
-Label: <one of Yes, No, Neither>
-Reason: one short sentence.
-Label: """
+Label: <Yes|No|Neither>
+Reason: <one short sentence>"""
 
 
 prompts = {

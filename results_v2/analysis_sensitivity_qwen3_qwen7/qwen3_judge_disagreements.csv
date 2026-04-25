@@ -1,1 +1,105 @@
 row_index,country,gold,base_prediction,alternate_prediction,raw_prediction_preview
+129,north_macedonia,yes,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in North Maced"
+130,north_macedonia,yes,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in North Maced"
+359,germany,yes,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Germany wit"
+507,fiji,yes,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Fiji with t"
+836,israel,yes,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Israel with"
+922,lebanon,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Lebanon wit"
+1026,north_macedonia,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in North Maced"
+1077,united_kingdom,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in United King"
+1193,sweden,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Sweden with"
+1262,germany,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Germany wit"
+1307,nepal,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Nepal with "
+1559,ethiopia,no,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Ethiopia wi"
+1809,russia,yes,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Russia with"
+1974,kenya,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Kenya with "
+2051,netherlands,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Netherlands"
+2052,netherlands,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Netherlands"
+2311,united_kingdom,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in United King"
+2375,vietnam,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Vietnam wit"
+2438,australia,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Australia w"
+2454,south_sudan,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in South Sudan"
+2549,mauritius,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Mauritius w"
+2559,laos,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Laos with t"
+2564,serbia,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Serbia with"
+2591,portugal,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Portugal wi"
+2596,portugal,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Portugal wi"
+2625,portugal,neutral,no,invalid,"system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Task: You are currently discussing if the action in the story is socially acceptable in Portugal wi"

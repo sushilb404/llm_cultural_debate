@@ -233,8 +233,6 @@ def debate_one(
 
     a3_raw = generate(tok_a, llm_a, p3_a, max_new_tokens)
     b3_raw = generate(tok_b, llm_b, p3_b, max_new_tokens)
-    a3 = parse_after_any_keyword(a3_raw, ["Answer (Yes, No or Neither):", "Answer:", "Answer", "Label:"])
-    b3 = parse_after_any_keyword(b3_raw, ["Answer (Yes, No or Neither):", "Answer:", "Answer", "Label:"])
 
     return {
         f"{alias_a}_1": a1,
@@ -243,8 +241,8 @@ def debate_one(
         f"{alias_b}_2": b2,
         f"{alias_a}_final_raw": a3_raw,
         f"{alias_b}_final_raw": b3_raw,
-        f"{alias_a}_final": extract_label(a3),
-        f"{alias_b}_final": extract_label(b3),
+        f"{alias_a}_final": extract_label(a3_raw),
+        f"{alias_b}_final": extract_label(b3_raw),
     }
 
 

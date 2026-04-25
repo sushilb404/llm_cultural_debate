@@ -5,7 +5,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-from label_utils import normalize_label
+from label_utils import extract_label, normalize_label
 
 
 LABELS = ("yes", "no", "neutral", "invalid")
@@ -30,29 +30,33 @@ def scenario_key(row: dict) -> Tuple[str, str, str, str]:
     )
 
 
-def judge_lenient(text: str) -> str:
-    cleaned = (text or "").replace(",", "").replace(".", "").strip().lower()
-    if "yes" in cleaned or "is socially acceptable" in cleaned or "are socially acceptable" in cleaned:
-        return "yes"
-    if "no" in cleaned or "is not socially acceptable" in cleaned or "are not socially acceptable" in cleaned:
-        return "no"
-    if "neither" in cleaned:
-        return "neutral"
-    return "invalid"
+def prediction_text(
+    row: dict,
+    model: str,
+    explicit_field: str = "",
+    prefer_raw: bool = True,
+) -> str:
+    if explicit_field:
+        return str(row.get(explicit_field, ""))
+
+    raw_field = f"{model}_final_raw"
+    final_field = f"{model}_final"
+
+    if prefer_raw and raw_field in row and str(row.get(raw_field, "")).strip():
+        return str(row.get(raw_field, ""))
+
+    if final_field in row and str(row.get(final_field, "")).strip():
+        return str(row.get(final_field, ""))
+
+    return str(row.get(raw_field, ""))
 
 
-def judge_strict(text: str) -> str:
-    # Strictly uses the first token-like decision to reduce over-permissive matching.
-    cleaned = (text or "").strip().lower()
-    tokens = [t.strip(".,:;!?()[]{}\"'") for t in cleaned.split()]
-    for tok in tokens:
-        if tok in ("yes", "y"):
-            return "yes"
-        if tok in ("no", "n"):
-            return "no"
-        if tok in ("neither", "neutral"):
-            return "neutral"
-    return "invalid"
+def judge_base(text: str) -> str:
+    return extract_label(text)
+
+
+def judge_alternate(text: str) -> str:
+    return extract_label(text, strict=True)
 
 
 def accuracy(preds: List[str], gold: List[str]) -> float:
@@ -113,7 +117,6 @@ def main() -> None:
     output_csv.parent.mkdir(parents=True, exist_ok=True)
 
     rows = read_jsonl(input_file)
-    field = f"{args.model}_final"
 
     by_key_alt: Dict[Tuple[str, str, str, str], str] = {}
     use_external_alternate = bool(args.alternate_file)
@@ -123,9 +126,13 @@ def main() -> None:
         if not alt_file.exists():
             raise FileNotFoundError(f"Alternate file not found: {alt_file}")
         alt_rows = read_jsonl(alt_file)
-        alt_field = args.alternate_field if args.alternate_field else field
         for row in alt_rows:
-            by_key_alt[scenario_key(row)] = str(row.get(alt_field, ""))
+            by_key_alt[scenario_key(row)] = prediction_text(
+                row,
+                args.model,
+                args.alternate_field,
+                prefer_raw=bool(args.alternate_field),
+            )
 
     gold: List[str] = []
     pred_base: List[str] = []
@@ -133,15 +140,15 @@ def main() -> None:
     disagreements: List[dict] = []
 
     for idx, row in enumerate(rows):
-        base_text = str(row.get(field, ""))
+        base_text = prediction_text(row, args.model)
         g = normalize_label(str(row.get("Gold Label", "")))
-        p_base = judge_lenient(base_text)
+        p_base = judge_base(base_text)
 
         if use_external_alternate:
             alt_text = by_key_alt.get(scenario_key(row), "")
-            p_alt = judge_lenient(alt_text)
+            p_alt = judge_base(alt_text)
         else:
-            p_alt = judge_strict(base_text)
+            p_alt = judge_alternate(base_text)
 
         gold.append(g)
         pred_base.append(p_base)
@@ -167,7 +174,13 @@ def main() -> None:
     summary = {
         "input_file": str(input_file),
         "model": args.model,
-        "alternate_source": str(args.alternate_file) if use_external_alternate else "strict_parser_on_same_outputs",
+        "alternate_source": (
+            str(args.alternate_file)
+            if use_external_alternate
+            else "canonical_strict_parser_on_same_outputs"
+        ),
+        "base_policy": "canonical_lenient",
+        "alternate_policy": "canonical_lenient_from_alternate_file" if use_external_alternate else "canonical_strict",
         "n_rows": len(rows),
         "agreement_rate": round(agree, 6),
         "cohen_kappa": round(kappa, 6),

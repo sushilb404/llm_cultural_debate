@@ -1,14 +1,16 @@
 {
-  "input_file": "results/multi/open_qwen3_qwen7.jsonl",
+  "input_file": "results_v2/multi/open_qwen3_qwen7.jsonl",
   "model": "qwen7",
-  "alternate_source": "strict_parser_on_same_outputs",
+  "alternate_source": "canonical_strict_parser_on_same_outputs",
+  "base_policy": "canonical_lenient",
+  "alternate_policy": "canonical_strict",
   "n_rows": 2633,
-  "agreement_rate": 0.900114,
-  "cohen_kappa": 0.832283,
-  "accuracy_base": 0.633118,
-  "accuracy_alternate": 0.697303,
-  "accuracy_delta_alternate_minus_base": 0.064185,
-  "n_disagreements": 263,
-  "disagreement_rate": 0.099886,
-  "disagreements_csv": "results/analysis_sensitivity_qwen3_qwen7/qwen7_judge_disagreements.csv"
+  "agreement_rate": 1.0,
+  "cohen_kappa": 1.0,
+  "accuracy_base": 0.701861,
+  "accuracy_alternate": 0.701861,
+  "accuracy_delta_alternate_minus_base": 0.0,
+  "n_disagreements": 0,
+  "disagreement_rate": 0.0,
+  "disagreements_csv": "results_v2/analysis_sensitivity_qwen3_qwen7/qwen7_judge_disagreements.csv"
 }

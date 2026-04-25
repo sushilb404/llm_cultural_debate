@@ -1,5 +1,5 @@
 {
-  "input_file": "results/multi/open_qwen3_qwen7.jsonl",
+  "input_file": "results_v2/multi/open_qwen3_qwen7.jsonl",
   "mode": "multi",
   "prediction_field": "qwen3_final",
   "total": 2633,
