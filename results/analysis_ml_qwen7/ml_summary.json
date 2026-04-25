@@ -1,0 +1,105 @@
+{
+  "input_file": "results\\multi\\open_qwen7_qwen15_full.jsonl",
+  "models": {
+    "qwen7": {
+      "n_rows": 2633,
+      "n_clusters": 4,
+      "rf": {
+        "status": "ok",
+        "feature_importance": [
+          0.014565523509848572,
+          0.22666831236235943,
+          0.057377092248485674,
+          0.6135444792455135,
+          0.029373487966019535,
+          0.04166116841697589,
+          0.008752839716847009,
+          0.00805709653395049
+        ],
+        "report": {
+          "0": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2069.0
+          },
+          "1": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 564.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          }
+        }
+      },
+      "cluster_counts": {
+        "0": 571,
+        "1": 346,
+        "2": 623,
+        "3": 1093
+      }
+    },
+    "qwen15": {
+      "n_rows": 2633,
+      "n_clusters": 4,
+      "rf": {
+        "status": "ok",
+        "feature_importance": [
+          0.02577084474733518,
+          0.17138353538120735,
+          0.16097691905659683,
+          0.5903947051653108,
+          0.011977685705714902,
+          0.024289029470191008,
+          0.007590979182994525,
+          0.007616301290649445
+        ],
+        "report": {
+          "0": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 718.0
+          },
+          "1": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1915.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          }
+        }
+      },
+      "cluster_counts": {
+        "0": 575,
+        "1": 1099,
+        "2": 394,
+        "3": 565
+      }
+    }
+  }
+}

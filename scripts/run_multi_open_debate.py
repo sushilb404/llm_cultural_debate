@@ -16,7 +16,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from multi_llm.prompt import prompts
 from multi_llm.utils import country_capitalized_mapping
-from label_utils import extract_label
+from scripts.label_utils import extract_label
 
 
 NON_RETRIABLE_CONFIG_ERROR_EXIT_CODE = 2
@@ -185,8 +185,8 @@ def debate_one(
 
     a1_raw = generate(tok_a, llm_a, p1_a, max_new_tokens)
     b1_raw = generate(tok_b, llm_b, p1_b, max_new_tokens)
-    a1 = parse_after_keyword(a1_raw, "Answer:")
-    b1 = parse_after_keyword(b1_raw, "Answer:")
+    a1 = strip_answer_prefix(a1_raw, ("Answer:",))
+    b1 = strip_answer_prefix(b1_raw, ("Answer:",))
 
     p2_a = (
         prompts["prompt_2"]
@@ -207,8 +207,8 @@ def debate_one(
 
     a2_raw = generate(tok_a, llm_a, p2_a, max_new_tokens)
     b2_raw = generate(tok_b, llm_b, p2_b, max_new_tokens)
-    a2 = parse_after_keyword(a2_raw, "Response:")
-    b2 = parse_after_keyword(b2_raw, "Response:")
+    a2 = strip_answer_prefix(a2_raw, ("Response:",))
+    b2 = strip_answer_prefix(b2_raw, ("Response:",))
 
     p3_a = (
         prompts["prompt_3"]

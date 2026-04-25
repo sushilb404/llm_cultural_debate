@@ -243,6 +243,23 @@ def main() -> None:
         repo_root,
     )
 
+    # 4b) AI-to-AI interaction load and agreement summary.
+    run_cmd(
+        [
+            py,
+            "scripts/analyze_ai_interactions.py",
+            "--input_files",
+            args.target_file,
+            args.target_file,
+            "--model_names",
+            args.first_model,
+            args.second_model,
+            "--output_dir",
+            f"{args.analysis_dir}/ai_interactions",
+        ],
+        repo_root,
+    )
+
     # 5) Judge sensitivity check (parser strictness by default).
     run_cmd(
         [

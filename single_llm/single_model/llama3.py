@@ -1,11 +1,19 @@
-import torch
+import argparse
 import datetime
 import jsonlines
 import os
-import argparse
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from huggingface_hub.hf_api import HfFolder
+import sys
+from pathlib import Path
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from prompt import prompts
+from scripts.label_utils import classify_label
 from utils import country_capitalized_mapping
 
 
@@ -18,9 +26,6 @@ model_id = "meta-llama/Meta-Llama-3-8B-Instruct"
 
 def main():
     start_time = datetime.datetime.now()
-
-    hf_token = ""
-    HfFolder.save_token(hf_token)
 
     # =========================================== Parameter Setup ===========================================
     parser = argparse.ArgumentParser()
@@ -81,7 +86,7 @@ def main():
                 )
                 response = outputs[0][input_ids.shape[-1]:]
 
-                generation = tokenizer.decode(response, skip_special_tokens=True)
+                generation = classify_label(tokenizer.decode(response, skip_special_tokens=True))
                 print(f"> {generation}")
                 print("\n======================================================\n")
                 generations.append(generation)

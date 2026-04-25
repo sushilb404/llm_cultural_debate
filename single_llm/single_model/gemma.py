@@ -1,10 +1,19 @@
-import torch
+import argparse
 import datetime
 import jsonlines
 import os
-import argparse
-from transformers import AutoTokenizer, AutoModelForCausalLM
+import sys
+from pathlib import Path
+
+import torch
+from transformers import AutoModelForCausalLM, AutoProcessor
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from prompt import prompts
+from scripts.label_utils import classify_label
 from utils import country_capitalized_mapping
 
 
@@ -13,7 +22,21 @@ os.environ["HF_HOME"] = own_cache_dir
 os.environ["HF_DATASETS"] = own_cache_dir
 
 
-model_id = "google/gemma-2-9b-it"
+model_id = "google/gemma-4-E4B-it"
+
+
+def _response_to_text(value):
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        # Common response shapes: {"text": ...} or chat-style {"content": ...}
+        for key in ("text", "content", "response", "answer"):
+            if key in value:
+                return _response_to_text(value[key])
+        return " ".join(_response_to_text(v) for v in value.values())
+    if isinstance(value, list):
+        return " ".join(_response_to_text(item) for item in value)
+    return str(value)
 
 def main():
     start_time = datetime.datetime.now()
@@ -25,10 +48,10 @@ def main():
     parser.add_argument("--type", type=str, default="without_rot")
     args = parser.parse_args()
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id, cache_dir=own_cache_dir)
+    processor = AutoProcessor.from_pretrained(model_id, cache_dir=own_cache_dir)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        torch_dtype=torch.bfloat16,
+        torch_dtype="auto",
         cache_dir=own_cache_dir,
         device_map="auto",
     )
@@ -53,23 +76,27 @@ def main():
                 print(prompt)
     
     # =========================================== Generation =============================================
-                input_ids = tokenizer(prompt, return_tensors="pt").to("cuda")
+                messages = [{"role": "user", "content": prompt}]
+                prompt_text = processor.apply_chat_template(
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True,
+                    enable_thinking=False,
+                )
+                inputs = processor(text=prompt_text, return_tensors="pt").to(model.device)
+                input_len = inputs["input_ids"].shape[-1]
 
-                outputs = model.generate(**input_ids, max_new_tokens=32)
-                generated_text = tokenizer.decode(outputs[0])
-
-                answer_start = "Answer (Yes, No or Neither):"
-                if answer_start in generated_text:
-                    generation = generated_text.split(answer_start)[-1].strip()
-                    generation = generation.split("<")[0].strip()
-                else:
-                    generation = generated_text
+                outputs = model.generate(**inputs, max_new_tokens=32, do_sample=False)
+                generated_text = processor.tokenizer.decode(outputs[0][input_len:], skip_special_tokens=False)
+                if hasattr(processor, "parse_response"):
+                    generated_text = processor.parse_response(generated_text)
+                generation = classify_label(_response_to_text(generated_text))
 
                 print(f"> {generation}")
                 print("\n======================================================\n")
                 generations.append(generation)
 
-                line[f"gemma"] = generation
+                line[f"gemma4"] = generation
                 outfile.write(line)
     
     end_time = datetime.datetime.now()

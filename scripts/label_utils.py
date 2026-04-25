@@ -1,9 +1,17 @@
+from __future__ import annotations
+
 import re
-from typing import Iterable, Optional
+from typing import Iterable, Optional, Tuple
 
 
 LABELS = ("yes", "no", "neutral")
 ROLE_NAMES = ("assistant", "model", "user", "system")
+
+ANSWER_MARKERS = (
+    "Answer (Yes, No or Neither):",
+    "Answer:",
+    "Response:",
+)
 
 _LABEL_VALUE_RE = r"(yes|no|neither|neutral)\b"
 _LABEL_LINE_RE = re.compile(
@@ -22,6 +30,14 @@ _BARE_LABEL_RE = re.compile(rf"^{_LABEL_VALUE_RE}\s*(?:[.?!])?$", re.IGNORECASE)
 _LEADING_LABEL_WITH_TEXT_RE = re.compile(rf"^{_LABEL_VALUE_RE}\s*[:,.?!-]\s*\S", re.IGNORECASE)
 _ROLE_ONLY_RE = re.compile(r"^(?:assistant|model|user|system)\s*[:\-]?\s*$", re.IGNORECASE)
 _INLINE_ROLE_PREFIX_RE = re.compile(r"^(?:assistant|model|user|system)\s*[:\-]\s*", re.IGNORECASE)
+
+
+def strip_answer_prefix(text: str, markers: Iterable[str] = ANSWER_MARKERS) -> str:
+    cleaned = (text or "").strip()
+    for marker in markers:
+        if marker in cleaned:
+            cleaned = cleaned.rsplit(marker, 1)[-1].strip()
+    return cleaned
 
 
 def _canonical(label: str) -> str:
@@ -176,8 +192,6 @@ def normalize_label(text: str, default: str = "invalid", strict: bool = False) -
     if re.search(r"\bneither\b", compact) or re.search(r"\bneutral\b", compact):
         return "neutral"
 
-    # Check negative acceptability before positive acceptability. Otherwise
-    # "not socially acceptable" is incorrectly counted as yes.
     negative_patterns = (
         r"\bnot\s+(?:socially\s+)?acceptable\b",
         r"\bnot\s+(?:socially\s+)?appropriate\b",
@@ -201,6 +215,18 @@ def normalize_label(text: str, default: str = "invalid", strict: bool = False) -
 
 def extract_label(text: str, default: str = "invalid", strict: bool = False) -> str:
     return normalize_label(text, default=default, strict=strict)
+
+
+def classify_label(text: str) -> str:
+    return normalize_label(text, default="neutral")
+
+
+def audit_label_text(text: str) -> Tuple[str, bool, bool]:
+    cleaned = strip_answer_prefix(text).lower()
+    tokens = re.findall(r"[a-z]+", cleaned)
+    has_yes = "yes" in tokens
+    has_no = "no" in tokens
+    return classify_label(text), has_yes, has_no
 
 
 def label_or_none(text: str) -> Optional[str]:

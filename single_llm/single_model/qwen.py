@@ -1,22 +1,22 @@
+import argparse
 import datetime
 import jsonlines
 import os
-import argparse
+import sys
+from pathlib import Path
+
 from transformers import pipeline
-from huggingface_hub.hf_api import HfFolder
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from prompt import prompts
+from scripts.label_utils import classify_label
 from utils import country_capitalized_mapping
 
 
-model_id = "Qwen/Qwen2-7B-Instruct"
-
-
-def extract_first_word_or_phrase(text):
-    delimiters = [".", ",", "\n", ", "]
-    for delimiter in delimiters:
-        if delimiter in text:
-            return text.split(delimiter)[0].strip()
-    return text.strip()
+model_id = "Qwen/Qwen2.5-7B-Instruct"
 
 
 own_cache_dir = ""
@@ -25,9 +25,6 @@ os.environ["HF_DATASETS"] = own_cache_dir
 
 def main():
     start_time = datetime.datetime.now()
-
-    hf_token = ""
-    HfFolder.save_token(hf_token)
 
     # =========================================== Parameter Setup ===========================================
     parser = argparse.ArgumentParser()
@@ -61,16 +58,7 @@ def main():
                 outputs = pipe(prompt, max_new_tokens=256, do_sample=False)
                 generated_text = outputs[0]["generated_text"]
 
-                answer_start = "Answer (Yes, No or Neither):"
-                if answer_start in generated_text:
-                    try:
-                        generation = generated_text.split(answer_start)[-1].strip().split()[0]
-                    except: 
-                        generation = generated_text
-                else:
-                    generation = generated_text
-                
-                generation = extract_first_word_or_phrase(generation)
+                generation = classify_label(generated_text)
                 
                 print(f"> {generation}")
                 print("\n======================================================\n")

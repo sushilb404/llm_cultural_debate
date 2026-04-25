@@ -1,4 +1,10 @@
 __pycache__/
 *.pyc
+*.py[cod]
 firebase-debug.log
 *.log
+
+.venv/
+models--*/
+CACHEDIR.TAG
+.locks/

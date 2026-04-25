@@ -1,0 +1,80 @@
+{
+  "models": [
+    {
+      "model": "qwen7",
+      "prediction_field": "qwen7_final",
+      "total": 2633,
+      "accuracy": 0.731105,
+      "label_distribution": {
+        "yes": 1102,
+        "no": 1299,
+        "neutral": 232
+      },
+      "label_rates": {
+        "yes": 0.418534,
+        "no": 0.493354,
+        "neutral": 0.088112
+      },
+      "avg_story_words": 36.236992,
+      "avg_rot_words": 16.340676,
+      "avg_prediction_words": 1.0,
+      "country_accuracy_min": 0.577778,
+      "country_accuracy_max": 0.857143,
+      "country_accuracy_gap": 0.279365,
+      "has_turns": true,
+      "stance_changed_rate": 0.102545,
+      "neutral_collapse_rate": 0.010254,
+      "avg_initial_words": 27.949107,
+      "avg_feedback_words": 29.115078,
+      "avg_final_words": 1.0,
+      "avg_interaction_words": 58.064185,
+      "interaction_load_ratio": 1.602346,
+      "warning_yes_only": false,
+      "input_file": "results\\multi\\open_qwen7_qwen15_full.jsonl"
+    },
+    {
+      "model": "qwen15",
+      "prediction_field": "qwen15_final",
+      "total": 2633,
+      "accuracy": 0.432586,
+      "label_distribution": {
+        "yes": 627,
+        "no": 661,
+        "neutral": 1345
+      },
+      "label_rates": {
+        "yes": 0.238131,
+        "no": 0.251044,
+        "neutral": 0.510824
+      },
+      "avg_story_words": 36.236992,
+      "avg_rot_words": 16.340676,
+      "avg_prediction_words": 1.0,
+      "country_accuracy_min": 0.111111,
+      "country_accuracy_max": 0.666667,
+      "country_accuracy_gap": 0.555556,
+      "has_turns": true,
+      "stance_changed_rate": 0.566654,
+      "neutral_collapse_rate": 0.506267,
+      "avg_initial_words": 39.912267,
+      "avg_feedback_words": 37.90657,
+      "avg_final_words": 1.0,
+      "avg_interaction_words": 78.818838,
+      "interaction_load_ratio": 2.175093,
+      "warning_yes_only": false,
+      "input_file": "results\\multi\\open_qwen7_qwen15_full.jsonl"
+    }
+  ],
+  "pairwise": [
+    {
+      "model_a": "qwen7",
+      "model_b": "qwen15",
+      "agreement": 0.401443,
+      "kappa": 0.181707
+    }
+  ],
+  "highest_accuracy_model": "qwen7",
+  "highest_yes_rate_model": "qwen7",
+  "highest_load_model": "qwen15",
+  "yes_only_warning": false
+}

@@ -1,0 +1,36 @@
+{
+  "input_files": [
+    "results\\single\\single_model\\qwen25_7b_without_rot.jsonl"
+  ],
+  "models": [
+    {
+      "model": "qwen7_single",
+      "input_file": "results\\single\\single_model\\qwen25_7b_without_rot.jsonl",
+      "prediction_field": "qwen",
+      "total": 2633,
+      "accuracy": 0.485758,
+      "label_distribution": {
+        "yes": 1124,
+        "no": 499,
+        "neutral": 1010
+      },
+      "label_rates": {
+        "yes": 0.426889,
+        "no": 0.189518,
+        "neutral": 0.383593
+      },
+      "yes_only_rows": 448,
+      "yes_only_rate": 0.170148,
+      "country_accuracy_min": 0.235294,
+      "country_accuracy_max": 0.68,
+      "country_accuracy_gap": 0.444706,
+      "stance_changed": 0,
+      "stance_changed_rate": 0.0,
+      "warning_yes_only": false
+    }
+  ],
+  "pairwise": [],
+  "top_yes_rate_model": "qwen7_single",
+  "top_accuracy_model": "qwen7_single",
+  "any_yes_only_warning": false
+}
