@@ -38,6 +38,16 @@ def _response_to_text(value):
         return " ".join(_response_to_text(item) for item in value)
     return str(value)
 
+
+def ensure_trailing_newline(path: Path) -> None:
+    if not path.exists() or path.stat().st_size == 0:
+        return
+    with path.open("rb+") as f:
+        f.seek(-1, os.SEEK_END)
+        if f.read(1) != b"\n":
+            f.write(b"\n")
+
+
 def main():
     start_time = datetime.datetime.now()
 
@@ -62,6 +72,7 @@ def main():
     if args.resume and output_path.exists():
         with jsonlines.open(output_path) as existing:
             completed = sum(1 for _ in existing.iter())
+        ensure_trailing_newline(output_path)
         print(f"Resuming Gemma from {completed} completed rows.")
 
     generations = []

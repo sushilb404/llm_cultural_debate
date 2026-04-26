@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import subprocess
+import sys
 import time
 from pathlib import Path
 from urllib.error import URLError
@@ -11,9 +12,13 @@ from urllib.request import Request, urlopen
 
 import jsonlines
 
-from multi_llm.prompt import prompts
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from multi_llm.utils import country_capitalized_mapping
 from scripts.label_utils import classify_label
+from single_llm.single_model.prompt import prompts
 
 
 def completed_rows(path: Path) -> int:
@@ -21,6 +26,15 @@ def completed_rows(path: Path) -> int:
         return 0
     with jsonlines.open(path) as existing:
         return sum(1 for _ in existing.iter())
+
+
+def ensure_trailing_newline(path: Path) -> None:
+    if not path.exists() or path.stat().st_size == 0:
+        return
+    with path.open("rb+") as f:
+        f.seek(-1, os.SEEK_END)
+        if f.read(1) != b"\n":
+            f.write(b"\n")
 
 
 def ollama_generate(model: str, prompt: str, host: str, timeout: int) -> str:
@@ -72,6 +86,7 @@ def main() -> None:
 
     completed = completed_rows(output_path) if args.resume else 0
     if completed:
+        ensure_trailing_newline(output_path)
         print(f"Resuming Ollama {args.model} from {completed} completed rows.")
 
     mode = "a" if args.resume and output_path.exists() else "w"
