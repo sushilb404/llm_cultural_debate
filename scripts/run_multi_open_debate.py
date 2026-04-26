@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Tuple
 
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoModelForCausalLM, AutoProcessor, AutoTokenizer, BitsAndBytesConfig
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(REPO_ROOT) not in sys.path:
@@ -16,7 +16,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from multi_llm.prompt import prompts
 from multi_llm.utils import country_capitalized_mapping
-from scripts.label_utils import extract_label
+from scripts.label_utils import extract_label, strip_answer_prefix
 
 
 NON_RETRIABLE_CONFIG_ERROR_EXIT_CODE = 2
@@ -130,28 +130,61 @@ def get_visible_gpu_memory_gb_by_device() -> List[float]:
     return gpu_memory_gb_by_device
 
 
+def _is_processor_model(model_id: str) -> bool:
+    return "gemma-4" in model_id.lower()
+
+
+def _apply_chat_template(processor, prompt: str) -> str:
+    messages = [{"role": "user", "content": prompt}]
+    try:
+        return processor.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+            enable_thinking=False,
+        )
+    except TypeError:
+        return processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+
+
 def load_model(model_id: str, load_in_4bit: bool = False):
-    tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+    processor = (
+        AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
+        if _is_processor_model(model_id)
+        else AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+    )
     kwargs = dict(device_map="auto", trust_remote_code=True)
     if load_in_4bit:
         kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
     else:
         kwargs["torch_dtype"] = "auto"
     model = AutoModelForCausalLM.from_pretrained(model_id, **kwargs)
-    if tokenizer.pad_token is None and tokenizer.eos_token is not None:
+    tokenizer = getattr(processor, "tokenizer", processor)
+    if getattr(tokenizer, "pad_token", None) is None and getattr(tokenizer, "eos_token", None) is not None:
         tokenizer.pad_token = tokenizer.eos_token
-    return tokenizer, model
+    return processor, model
 
 
-def generate(tokenizer, model, prompt: str, max_new_tokens: int) -> str:
-    prompt_text = maybe_apply_chat_template(tokenizer, prompt)
-    inputs = tokenizer(prompt_text, return_tensors="pt")
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+def generate(processor, model, prompt: str, max_new_tokens: int) -> str:
+    tokenizer = getattr(processor, "tokenizer", processor)
+    if hasattr(processor, "apply_chat_template") and hasattr(processor, "tokenizer"):
+        prompt_text = _apply_chat_template(processor, prompt)
+        inputs = processor(text=prompt_text, return_tensors="pt").to(model.device)
+    else:
+        prompt_text = maybe_apply_chat_template(tokenizer, prompt)
+        inputs = tokenizer(prompt_text, return_tensors="pt")
+        inputs = {k: v.to(model.device) for k, v in inputs.items()}
+    input_len = inputs["input_ids"].shape[-1]
     with torch.no_grad():
         outputs = model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False)
-    text = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    if text.startswith(prompt_text):
-        text = text[len(prompt_text):].strip()
+    text = tokenizer.decode(outputs[0][input_len:], skip_special_tokens=True).strip()
+    if hasattr(processor, "parse_response"):
+        try:
+            parsed = processor.parse_response(text)
+            if isinstance(parsed, str):
+                text = parsed
+        except Exception:
+            pass
     return text
 
 
