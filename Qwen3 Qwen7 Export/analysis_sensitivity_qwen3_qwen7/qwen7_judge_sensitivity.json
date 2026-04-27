@@ -1,0 +1,16 @@
+{
+  "input_file": "/content/drive/MyDrive/llm_cultural_debate_exports/qwen3_qwen7/open_qwen3_qwen7.jsonl",
+  "model": "qwen7",
+  "alternate_source": "canonical_strict_parser_on_same_outputs",
+  "base_policy": "canonical_lenient",
+  "alternate_policy": "canonical_strict",
+  "n_rows": 2633,
+  "agreement_rate": 1.0,
+  "cohen_kappa": 1.0,
+  "accuracy_base": 0.701861,
+  "accuracy_alternate": 0.701861,
+  "accuracy_delta_alternate_minus_base": 0.0,
+  "n_disagreements": 0,
+  "disagreement_rate": 0.0,
+  "disagreements_csv": "/content/drive/MyDrive/llm_cultural_debate_exports/qwen3_qwen7/analysis_sensitivity_qwen3_qwen7/qwen7_judge_disagreements.csv"
+}

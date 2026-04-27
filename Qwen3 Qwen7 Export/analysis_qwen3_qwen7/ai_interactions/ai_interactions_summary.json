@@ -1,0 +1,80 @@
+{
+  "models": [
+    {
+      "model": "qwen3",
+      "prediction_field": "qwen3_final",
+      "total": 2633,
+      "accuracy": 0.3327,
+      "label_distribution": {
+        "yes": 1,
+        "no": 2632,
+        "neutral": 0
+      },
+      "label_rates": {
+        "yes": 0.00038,
+        "no": 0.99962,
+        "neutral": 0.0
+      },
+      "avg_story_words": 36.236992,
+      "avg_rot_words": 16.340676,
+      "avg_prediction_words": 1.0,
+      "country_accuracy_min": 0.244444,
+      "country_accuracy_max": 0.428571,
+      "country_accuracy_gap": 0.184127,
+      "has_turns": true,
+      "stance_changed_rate": 0.501709,
+      "neutral_collapse_rate": 0.0,
+      "avg_initial_words": 31.372579,
+      "avg_feedback_words": 31.584504,
+      "avg_final_words": 1.0,
+      "avg_interaction_words": 63.957083,
+      "interaction_load_ratio": 1.764967,
+      "warning_yes_only": false,
+      "input_file": "/content/drive/MyDrive/llm_cultural_debate_exports/qwen3_qwen7/open_qwen3_qwen7.jsonl"
+    },
+    {
+      "model": "qwen7",
+      "prediction_field": "qwen7_final",
+      "total": 2633,
+      "accuracy": 0.701861,
+      "label_distribution": {
+        "yes": 1032,
+        "no": 1338,
+        "neutral": 263
+      },
+      "label_rates": {
+        "yes": 0.391948,
+        "no": 0.508166,
+        "neutral": 0.099886
+      },
+      "avg_story_words": 36.236992,
+      "avg_rot_words": 16.340676,
+      "avg_prediction_words": 1.0,
+      "country_accuracy_min": 0.525,
+      "country_accuracy_max": 0.857143,
+      "country_accuracy_gap": 0.332143,
+      "has_turns": true,
+      "stance_changed_rate": 0.153057,
+      "neutral_collapse_rate": 0.038739,
+      "avg_initial_words": 28.001139,
+      "avg_feedback_words": 29.710976,
+      "avg_final_words": 1.0,
+      "avg_interaction_words": 58.712115,
+      "interaction_load_ratio": 1.620226,
+      "warning_yes_only": false,
+      "input_file": "/content/drive/MyDrive/llm_cultural_debate_exports/qwen3_qwen7/open_qwen3_qwen7.jsonl"
+    }
+  ],
+  "pairwise": [
+    {
+      "model_a": "qwen3",
+      "model_b": "qwen7",
+      "agreement": 0.508545,
+      "kappa": 0.000862
+    }
+  ],
+  "highest_accuracy_model": "qwen7",
+  "highest_yes_rate_model": "qwen7",
+  "highest_load_model": "qwen3",
+  "yes_only_warning": false
+}

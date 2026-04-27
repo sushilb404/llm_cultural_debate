@@ -1,0 +1,105 @@
+{
+  "input_file": "/content/drive/MyDrive/llm_cultural_debate_exports/qwen3_qwen7/open_qwen3_qwen7.jsonl",
+  "models": {
+    "qwen3": {
+      "n_rows": 2633,
+      "n_clusters": 4,
+      "rf": {
+        "status": "ok",
+        "feature_importance": [
+          0.3971662531366277,
+          0.034713456767339584,
+          0.14206674248732865,
+          0.40379961145301424,
+          0.014834024219118436,
+          0.004163502135621519,
+          0.00227594122307604,
+          0.0009804685778738611
+        ],
+        "report": {
+          "0": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1312.0
+          },
+          "1": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 1321.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          }
+        }
+      },
+      "cluster_counts": {
+        "0": 451,
+        "1": 917,
+        "2": 516,
+        "3": 749
+      }
+    },
+    "qwen7": {
+      "n_rows": 2633,
+      "n_clusters": 4,
+      "rf": {
+        "status": "ok",
+        "feature_importance": [
+          0.11819624018578358,
+          0.09038019591424577,
+          0.20465709842206742,
+          0.510845692560655,
+          0.018850113562574843,
+          0.04539474056312112,
+          0.006576160702351363,
+          0.005099758089200882
+        ],
+        "report": {
+          "0": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2230.0
+          },
+          "1": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 403.0
+          },
+          "accuracy": 1.0,
+          "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          },
+          "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 2633.0
+          }
+        }
+      },
+      "cluster_counts": {
+        "0": 371,
+        "1": 750,
+        "2": 855,
+        "3": 657
+      }
+    }
+  }
+}

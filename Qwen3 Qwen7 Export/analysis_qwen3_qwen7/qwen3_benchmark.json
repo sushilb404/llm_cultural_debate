@@ -1,0 +1,33 @@
+{
+  "input_file": "/content/drive/MyDrive/llm_cultural_debate_exports/qwen3_qwen7/open_qwen3_qwen7.jsonl",
+  "mode": "multi",
+  "prediction_field": "qwen3_final",
+  "total": 2633,
+  "correct": 876,
+  "parity_lambda": 0.25,
+  "global_accuracy": 0.3327,
+  "macro_accuracy": 0.333991,
+  "best_country_accuracy": 0.428571,
+  "worst_country_accuracy": 0.244444,
+  "cpg": 0.184127,
+  "paa": 0.286669,
+  "bootstrap_samples": 500,
+  "ci95": {
+    "global_accuracy_ci95": [
+      0.31523,
+      0.35207
+    ],
+    "macro_accuracy_ci95": [
+      0.316331,
+      0.354103
+    ],
+    "cpg_ci95": [
+      0.327586,
+      0.542125
+    ],
+    "paa_ci95": [
+      0.193876,
+      0.257849
+    ]
+  }
+}
