@@ -1,0 +1,33 @@
+{
+  "input_file": "results\\multi\\open_qwen7_gemma4_full.jsonl",
+  "mode": "multi",
+  "prediction_field": "gemma4_final",
+  "total": 2633,
+  "correct": 2073,
+  "parity_lambda": 0.25,
+  "global_accuracy": 0.787315,
+  "macro_accuracy": 0.789217,
+  "best_country_accuracy": 0.911765,
+  "worst_country_accuracy": 0.62963,
+  "cpg": 0.282135,
+  "paa": 0.716781,
+  "bootstrap_samples": 500,
+  "ci95": {
+    "global_accuracy_ci95": [
+      0.772503,
+      0.802507
+    ],
+    "macro_accuracy_ci95": [
+      0.773921,
+      0.804505
+    ],
+    "cpg_ci95": [
+      0.346429,
+      0.566667
+    ],
+    "paa_ci95": [
+      0.644112,
+      0.709154
+    ]
+  }
+}

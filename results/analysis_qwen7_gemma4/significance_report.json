@@ -1,0 +1,39 @@
+{
+  "input_file": "results\\multi\\open_qwen7_gemma4_full.jsonl",
+  "n_unique_rows": 2633,
+  "first_model": "qwen7",
+  "second_model": "gemma4",
+  "parity_lambda": 0.25,
+  "observed": {
+    "acc_a": 0.753513,
+    "acc_b": 0.787315,
+    "acc_diff_a_minus_b": -0.033802,
+    "cpg_a": 0.356209,
+    "cpg_b": 0.282135,
+    "cpg_diff_a_minus_b": 0.074074,
+    "paa_a": 0.664461,
+    "paa_b": 0.716781,
+    "paa_diff_a_minus_b": -0.05232
+  },
+  "bootstrap_samples": 1500,
+  "bootstrap_ci95": {
+    "acc_diff_ci95": [
+      -0.047854,
+      -0.01937
+    ],
+    "cpg_diff_ci95": [
+      -0.113514,
+      0.177778
+    ],
+    "paa_diff_ci95": [
+      -0.082243,
+      -0.002407
+    ]
+  },
+  "permutation_samples": 2000,
+  "pvalues_two_sided": {
+    "acc_diff_pvalue": 0.0005,
+    "cpg_diff_pvalue": 0.18041,
+    "paa_diff_pvalue": 0.001
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "input_file": "results\\multi\\open_qwen7_gemma4_full.jsonl",
+  "models": [
+    {
+      "model": "qwen7",
+      "total": 2633,
+      "drift_rate": 0.085074,
+      "neutral_collapse_rate": 0.008735,
+      "initial_accuracy": 0.804406,
+      "final_accuracy": 0.753513,
+      "accuracy_gain": -0.050893
+    },
+    {
+      "model": "gemma4",
+      "total": 2633,
+      "drift_rate": 0.137866,
+      "neutral_collapse_rate": 0.115837,
+      "initial_accuracy": 0.677554,
+      "final_accuracy": 0.787315,
+      "accuracy_gain": 0.109761
+    }
+  ]
+}

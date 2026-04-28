@@ -1,0 +1,16 @@
+{
+  "input_file": "results\\multi\\open_qwen7_gemma4_full.jsonl",
+  "model": "gemma4",
+  "alternate_source": "canonical_strict_parser_on_same_outputs",
+  "base_policy": "canonical_lenient",
+  "alternate_policy": "canonical_strict",
+  "n_rows": 2633,
+  "agreement_rate": 1.0,
+  "cohen_kappa": 1.0,
+  "accuracy_base": 0.787315,
+  "accuracy_alternate": 0.787315,
+  "accuracy_delta_alternate_minus_base": 0.0,
+  "n_disagreements": 0,
+  "disagreement_rate": 0.0,
+  "disagreements_csv": "results\\analysis_sensitivity_qwen7_gemma4\\gemma4_judge_disagreements.csv"
+}
