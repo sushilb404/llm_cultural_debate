@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -9,6 +10,10 @@ from urllib.request import Request, urlopen
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from multi_llm.prompt import prompts
 from multi_llm.utils import country_capitalized_mapping
