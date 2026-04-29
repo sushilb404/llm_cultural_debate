@@ -1,0 +1,39 @@
+{
+  "input_file": "results\\multi\\open_qwen7_ollama_llama3_8b_full.jsonl",
+  "n_unique_rows": 2633,
+  "first_model": "qwen7",
+  "second_model": "ollama_llama3_8b",
+  "parity_lambda": 0.25,
+  "observed": {
+    "acc_a": 0.712875,
+    "acc_b": 0.668819,
+    "acc_diff_a_minus_b": 0.044056,
+    "cpg_a": 0.302222,
+    "cpg_b": 0.301587,
+    "cpg_diff_a_minus_b": 0.000635,
+    "paa_a": 0.637319,
+    "paa_b": 0.593422,
+    "paa_diff_a_minus_b": 0.043897
+  },
+  "bootstrap_samples": 1500,
+  "bootstrap_ci95": {
+    "acc_diff_ci95": [
+      0.031143,
+      0.056589
+    ],
+    "cpg_diff_ci95": [
+      -0.141622,
+      0.138889
+    ],
+    "paa_diff_ci95": [
+      0.004464,
+      0.084184
+    ]
+  },
+  "permutation_samples": 2000,
+  "pvalues_two_sided": {
+    "acc_diff_pvalue": 0.0005,
+    "cpg_diff_pvalue": 0.994003,
+    "paa_diff_pvalue": 0.001499
+  }
+}

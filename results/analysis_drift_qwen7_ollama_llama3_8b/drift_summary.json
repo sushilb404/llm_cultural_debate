@@ -1,0 +1,23 @@
+{
+  "input_file": "results\\multi\\open_qwen7_ollama_llama3_8b_full.jsonl",
+  "models": [
+    {
+      "model": "qwen7",
+      "total": 2633,
+      "drift_rate": 0.143562,
+      "neutral_collapse_rate": 0.01899,
+      "initial_accuracy": 0.804406,
+      "final_accuracy": 0.712875,
+      "accuracy_gain": -0.091531
+    },
+    {
+      "model": "ollama_llama3_8b",
+      "total": 2633,
+      "drift_rate": 0.235473,
+      "neutral_collapse_rate": 0.00076,
+      "initial_accuracy": 0.736802,
+      "final_accuracy": 0.668819,
+      "accuracy_gain": -0.067983
+    }
+  ]
+}

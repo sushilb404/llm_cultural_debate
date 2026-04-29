@@ -1,0 +1,80 @@
+{
+  "models": [
+    {
+      "model": "qwen7",
+      "prediction_field": "qwen7_final",
+      "total": 2633,
+      "accuracy": 0.712875,
+      "label_distribution": {
+        "yes": 1019,
+        "no": 1393,
+        "neutral": 221
+      },
+      "label_rates": {
+        "yes": 0.387011,
+        "no": 0.529054,
+        "neutral": 0.083935
+      },
+      "avg_story_words": 36.236992,
+      "avg_rot_words": 16.340676,
+      "avg_prediction_words": 1.0,
+      "country_accuracy_min": 0.577778,
+      "country_accuracy_max": 0.88,
+      "country_accuracy_gap": 0.302222,
+      "has_turns": true,
+      "stance_changed_rate": 0.143562,
+      "neutral_collapse_rate": 0.01899,
+      "avg_initial_words": 26.949107,
+      "avg_feedback_words": 28.70376,
+      "avg_final_words": 1.0,
+      "avg_interaction_words": 56.652867,
+      "interaction_load_ratio": 1.563399,
+      "warning_yes_only": false,
+      "input_file": "results\\multi\\open_qwen7_ollama_llama3_8b_full.jsonl"
+    },
+    {
+      "model": "ollama_llama3_8b",
+      "prediction_field": "ollama_llama3_8b_final",
+      "total": 2633,
+      "accuracy": 0.668819,
+      "label_distribution": {
+        "yes": 1279,
+        "no": 1221,
+        "neutral": 133
+      },
+      "label_rates": {
+        "yes": 0.485758,
+        "no": 0.46373,
+        "neutral": 0.050513
+      },
+      "avg_story_words": 36.236992,
+      "avg_rot_words": 16.340676,
+      "avg_prediction_words": 1.0,
+      "country_accuracy_min": 0.555556,
+      "country_accuracy_max": 0.857143,
+      "country_accuracy_gap": 0.301587,
+      "has_turns": true,
+      "stance_changed_rate": 0.234713,
+      "neutral_collapse_rate": 0.0,
+      "avg_initial_words": 36.563616,
+      "avg_feedback_words": 39.300038,
+      "avg_final_words": 1.0,
+      "avg_interaction_words": 76.863654,
+      "interaction_load_ratio": 2.121138,
+      "warning_yes_only": false,
+      "input_file": "results\\multi\\open_qwen7_ollama_llama3_8b_full.jsonl"
+    }
+  ],
+  "pairwise": [
+    {
+      "model_a": "qwen7",
+      "model_b": "ollama_llama3_8b",
+      "agreement": 0.837828,
+      "kappa": 0.711657
+    }
+  ],
+  "highest_accuracy_model": "qwen7",
+  "highest_yes_rate_model": "ollama_llama3_8b",
+  "highest_load_model": "ollama_llama3_8b",
+  "yes_only_warning": false
+}

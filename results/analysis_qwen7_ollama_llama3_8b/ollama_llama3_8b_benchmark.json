@@ -1,0 +1,33 @@
+{
+  "input_file": "results\\multi\\open_qwen7_ollama_llama3_8b_full.jsonl",
+  "mode": "multi",
+  "prediction_field": "ollama_llama3_8b_final",
+  "total": 2633,
+  "correct": 1761,
+  "parity_lambda": 0.25,
+  "global_accuracy": 0.668819,
+  "macro_accuracy": 0.670764,
+  "best_country_accuracy": 0.857143,
+  "worst_country_accuracy": 0.555556,
+  "cpg": 0.301587,
+  "paa": 0.593422,
+  "bootstrap_samples": 500,
+  "ci95": {
+    "global_accuracy_ci95": [
+      0.651728,
+      0.687049
+    ],
+    "macro_accuracy_ci95": [
+      0.654137,
+      0.689528
+    ],
+    "cpg_ci95": [
+      0.369338,
+      0.604895
+    ],
+    "paa_ci95": [
+      0.511983,
+      0.583644
+    ]
+  }
+}
