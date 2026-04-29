@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import textwrap
 from pathlib import Path
+import argparse
 
 import matplotlib
 
@@ -11,8 +12,8 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SOURCE = REPO_ROOT / "proposal_materials" / "multicultural_llm_debate_outline.md"
-OUTPUT = REPO_ROOT / "proposal_materials" / "multicultural_llm_debate_outline.pdf"
+DEFAULT_SOURCE = REPO_ROOT / "proposal_materials" / "multicultural_llm_debate_outline.md"
+DEFAULT_OUTPUT = REPO_ROOT / "proposal_materials" / "multicultural_llm_debate_outline.pdf"
 
 
 def strip_markdown(line: str) -> tuple[str, str]:
@@ -91,13 +92,25 @@ def paginate(source_text: str) -> list[list[tuple[str, str]]]:
 
 
 def main() -> None:
-    source_text = SOURCE.read_text(encoding="utf-8")
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    parser = argparse.ArgumentParser(description="Render a simple Markdown proposal file to PDF.")
+    parser.add_argument("--input", default=str(DEFAULT_SOURCE))
+    parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    args = parser.parse_args()
+
+    source = Path(args.input)
+    output = Path(args.output)
+    if not source.is_absolute():
+        source = REPO_ROOT / source
+    if not output.is_absolute():
+        output = REPO_ROOT / output
+
+    source_text = source.read_text(encoding="utf-8")
+    output.parent.mkdir(parents=True, exist_ok=True)
     pages = paginate(source_text)
-    with PdfPages(OUTPUT) as pdf:
+    with PdfPages(output) as pdf:
         for index, page in enumerate(pages, start=1):
             render_page(pdf, page, index)
-    print(f"Wrote {OUTPUT}")
+    print(f"Wrote {output}")
 
 
 if __name__ == "__main__":

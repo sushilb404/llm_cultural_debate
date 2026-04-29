@@ -21,6 +21,8 @@ The repository already supports most generation/evaluation workflows, so this pr
 2. intervention-based analysis to isolate what aspect of debate causes gains,
 3. and a partner-selection policy that optimizes both average performance and cultural parity.
 
+Recent full-dataset debate runs now give this proposal a concrete empirical direction. The strongest result so far is the **Qwen7 + Gemma4** debate pair, where Gemma4 reached 78.7% final accuracy and Qwen7 reached 75.4%. The **Qwen7 + Ollama Llama3.1 8B** pair was weaker but still coherent, with Qwen7 at 71.3% and Ollama at 66.9%. The earlier **Qwen7 + Qwen1.5** run shows the failure case: Qwen7 remained relatively strong at 73.1%, but Qwen1.5 reached only 43.3% and had much lower agreement with Qwen7. These results suggest that multi-agent debate can help multicultural judgment, but only when the debate partner is sufficiently capable.
+
 ## 2. Problem Statement
 Large language models often perform unevenly across cultural contexts. A model can achieve good overall accuracy while still failing systematically for specific countries or cultural regions.
 
@@ -64,6 +66,26 @@ The original paper already studies single-model prompting, self-reflection, deba
    - Instead of treating debate as a single black box, we will separate what comes from the speaker, the partner, and the judge stage.
 
 These additions make the project about more than "does debate help?". It becomes a study of how cultural judgments move, stabilize, or break under collaboration.
+
+## 3.2 Preliminary Findings from Completed Runs
+The completed experiments point to three important findings:
+
+1. **Model pairing matters.**
+   - Multi-agent debate is not automatically beneficial.
+   - Qwen7 + Gemma4 produced the strongest overall result.
+   - Qwen7 + Qwen1.5 produced unstable disagreement and weak partner performance.
+
+2. **Agreement is useful only when accuracy is also high.**
+   - Qwen7 + Gemma4 agreement: 84.2%.
+   - Qwen7 + Ollama Llama3.1 8B agreement: 83.8%.
+   - Qwen7 + Qwen1.5 agreement: 40.1%.
+   - The first two runs show stable interaction, while the third shows disagreement without reliable correction.
+
+3. **Neutral and ambiguous cultural cases are the hardest.**
+   - Cross-run ML clustering found low-performing scenario clusters dominated by neutral gold labels.
+   - This suggests that models often overcommit to yes/no when the correct answer requires recognizing ambiguity or insufficient cultural evidence.
+
+These findings refine the project claim: the contribution is not simply that debate improves performance, but that debate quality depends on partner capability, agreement structure, and the difficulty of culturally ambiguous cases.
 
 ## 4. Scope (Adjusted to Existing Code)
 ### In scope
@@ -199,53 +221,116 @@ We add a new benchmark family that is not present in the original debate-only fr
 - **Cross-country flip rate**: how often the same story changes label when the country changes.
 
 ### H. Machine Learning Conversation Analysis
-To complement the parity and drift metrics, we will analyze conversational trajectories using clustering and supervised learning on turn-level features.
+To complement the parity and drift metrics, we analyze model outputs across completed runs using clustering and supervised learning. The current cross-run analysis includes 22,173 long-format model-output records across the Qwen7 + Gemma4, Qwen7 + Ollama Llama3.1 8B, Qwen7 + Qwen1.5, and single-model baseline outputs.
 
-#### Turn-level feature extraction
-For each conversation turn, we will derive features such as:
-- sentence-transformer embeddings for the turn text,
-- cosine similarity to the previous turn,
-- stance label or stance-change indicator,
-- sentiment score,
-- conversation position / turn index,
-- model speaker identity,
-- whether the turn is part of debate or collaboration.
+#### Feature extraction
+For each model output and scenario, we derive features such as:
+- model identity,
+- debate run identity,
+- country,
+- gold label,
+- predicted label,
+- correctness,
+- story length,
+- rule-of-thumb length,
+- and whether the output came from a debate interaction.
 
 #### K-means clustering
-We will cluster conversations or conversation trajectories using a compact feature vector formed from:
-- mean embedding statistics,
-- embedding variance across turns,
-- sentiment mean and variance,
-- stance-change rate,
-- coherence statistics.
+We cluster scenarios based on correctness patterns across model runs. This identifies latent difficulty groups such as:
+- high-performing clear yes cases,
+- medium-performing no cases,
+- low-performing neutral or ambiguous cases,
+- and countries or rule types that repeatedly produce disagreement.
 
-This is useful for discovering latent conversational regimes such as:
-- stable agreement,
-- polarized debate,
-- high-drift / low-coherence conversations,
-- collaboration that converges quickly.
+The completed clustering produced five scenario groups. The two lowest-performing clusters were dominated by neutral gold labels, which supports the claim that ambiguity recognition is a major weakness in multicultural LLM evaluation.
 
 #### Random Forest classification
-We will train a Random Forest classifier to predict conversation type, such as:
-- debate vs collaboration,
-- high-drift vs low-drift,
-- high-coherence vs low-coherence.
+We train a Random Forest classifier to predict whether a model output will be correct from run-level, model-level, country, and label features.
 
 Feature importance will help us identify which characteristics most strongly separate interaction styles. We expect the most informative features to include:
-- semantic similarity between turns,
-- sentiment variance,
-- stance-change frequency,
-- trajectory length,
-- and speaker-role patterns.
+- gold label type,
+- predicted label type,
+- whether the result came from debate,
+- model identity,
+- country,
+- and scenario length.
+
+In the current analysis, the strongest predictors of correctness are the gold and predicted label types, especially neutral labels. This reinforces the qualitative finding that ambiguous cultural cases are the main source of failure.
 
 #### Dimensionality reduction and visualization
 We will use PCA or a similar reduction method to project turn embeddings or conversation summaries into 2D for visualization. This provides a qualitative view of conversation trajectories and cluster separation.
 
+## 6.1 Current Result Summary
+The current full-run results are:
+
+| Debate run | Model | Accuracy |
+| --- | --- | ---: |
+| Qwen7 + Gemma4 | Gemma4 | 78.7% |
+| Qwen7 + Gemma4 | Qwen7 | 75.4% |
+| Qwen7 + Ollama Llama3.1 8B | Qwen7 | 71.3% |
+| Qwen7 + Ollama Llama3.1 8B | Ollama Llama3.1 8B | 66.9% |
+| Qwen7 + Qwen1.5 | Qwen7 | 73.1% |
+| Qwen7 + Qwen1.5 | Qwen1.5 | 43.3% |
+
+Pairwise agreement:
+
+| Debate run | Agreement |
+| --- | ---: |
+| Qwen7 + Gemma4 | 84.2% |
+| Qwen7 + Ollama Llama3.1 8B | 83.8% |
+| Qwen7 + Qwen1.5 | 40.1% |
+
+For the Qwen7 + Ollama Llama3.1 8B run, Qwen7's advantage was statistically significant:
+- Qwen7 accuracy: 71.3%.
+- Ollama Llama3.1 8B accuracy: 66.9%.
+- Accuracy difference: 4.4 percentage points.
+- Permutation-test p-value: 0.0005.
+
+For the Qwen7 + Gemma4 run, Gemma4's advantage over Qwen7 was also statistically significant:
+- Gemma4 accuracy: 78.7%.
+- Qwen7 accuracy: 75.4%.
+- Accuracy difference: 3.4 percentage points.
+- Permutation-test p-value: 0.0005.
+
+Together, these results support the central claim that multi-agent debate can improve multicultural acceptability judgments, but the gains depend strongly on the model pair.
+
+## 6.2 Proposed Figures for Final Report
+The final report should use the following figures and tables:
+
+1. **Overall accuracy by model pair**
+   - A grouped bar chart comparing Qwen7 + Gemma4, Qwen7 + Ollama Llama3.1 8B, and Qwen7 + Qwen1.5.
+   - This should be the headline result figure.
+
+2. **Pairwise agreement across debate runs**
+   - A bar chart comparing agreement rates across the three debate pairs.
+   - This shows that useful debate requires stable interaction, while weak partner models produce noisy disagreement.
+
+3. **Country-level accuracy heatmaps**
+   - Use `results/figures_qwen7_gemma4/drift_country_heatmap.png`.
+   - Use `results/figures_qwen7_ollama_llama3_8b/drift_country_heatmap.png`.
+   - These figures show that multicultural performance varies across countries.
+
+4. **Debate drift and accuracy gain**
+   - Use `results/figures_qwen7_gemma4/drift_accuracy_gain.png`.
+   - Use `results/figures_qwen7_ollama_llama3_8b/drift_accuracy_gain.png`.
+   - These figures show whether answer changes during debate improve correctness or merely shift labels.
+
+5. **Scenario difficulty clusters**
+   - Use `results/analysis_cross_run_ml/scenario_clusters.csv`.
+   - Use `results/analysis_cross_run_ml/cross_run_ml_summary.json`.
+   - This analysis should support the claim that neutral and ambiguous scenarios are the hardest.
+
 ## 7. Experimental Plan
-### Models/conditions to run first
-- Single: `gemma`, `llama3`, `aya`, `internlm`, `yi`, `exaone`, `seallm` (as available)
-- Self-reflection: same set where scripts exist
-- Multi pairs: start with existing pairs in `multi_llm/` and prioritize diverse pairs (e.g., `gemma_aya`, `llama3_yi`, `internlm_qwen`)
+### Completed model conditions
+- Qwen7 + Gemma4 full debate run.
+- Qwen7 + Ollama Llama3.1 8B full debate run.
+- Qwen7 + Qwen1.5 full debate run.
+- Single-model baselines for Qwen7, Gemma4, and Ollama Llama3.1 8B where available.
+
+### Remaining model conditions if time allows
+- Additional self-reflection baselines.
+- Additional partner-swap debate pairs.
+- Additional reduced-feedback ablations to separate first-turn performance from final debate performance.
 
 ### Data split
 - Use full provided evaluation file (`data/normad.jsonl`) for benchmark comparison.
